@@ -1,0 +1,8 @@
+User sends a request to API which reads from database which has a cache infront of it
+the browser loads the page from the web server, which sits behind a CDN
+the mobile app calls the API through an API gateway, and the API writes orders to Postgres
+the worker pulls jobs from the queue, which has a rate limiter in front of it, and stores results in S3
+the customer pays at checkout, which calls the payment service behind a fraud check
+the API reads sessions from Redis, and Redis has a proxy in front of it. if the session is missing the API redirects to login
+the patient books through the portal, which sends requests to the scheduler that sits behind an intake queue
+the client uploads files to the storage service via a load balancer, and the storage service has a virus scanner in front of it

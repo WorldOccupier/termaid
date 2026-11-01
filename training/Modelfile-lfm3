@@ -1,0 +1,15 @@
+FROM ./gguf/lfm3-json-v1-q6_k.gguf
+# LFM3 chat template with thinking disabled, matching training (enable_thinking=False).
+TEMPLATE """{{- if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}
+{{- range .Messages }}
+{{- if eq .Role "user" }}<|im_start|>user
+{{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+<think></think>{{ .Content }}<|im_end|>
+{{ end }}
+{{- end }}<|im_start|>assistant
+<think></think>"""
+PARAMETER stop "<|im_end|>"
+PARAMETER temperature 0

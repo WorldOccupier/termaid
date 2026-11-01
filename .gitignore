@@ -1,0 +1,14 @@
+node_modules/
+training/.venv/
+training/data*/
+training/adapters*/
+training/fused/
+training/*.log
+training/best-adapter/
+training/gguf/
+training/fused/
+training/ckpt-*/
+training/eval-*.txt
+training/probe-*.jsonl
+__pycache__/
+.DS_Store

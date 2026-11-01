@@ -1,0 +1,5646 @@
+[
+ {
+  "name": "hotel reservations and housekeeping",
+  "things": [
+   [
+    "Front Desk",
+    "the front desk"
+   ],
+   [
+    "Guest Room",
+    "the guest room"
+   ],
+   [
+    "Reservation System",
+    "the reservation system"
+   ],
+   [
+    "Housekeeping Cart",
+    "the housekeeping cart"
+   ],
+   [
+    "Laundry Room",
+    "the laundry room"
+   ],
+   [
+    "Key Card Encoder",
+    "the key card encoder"
+   ],
+   [
+    "Booking Queue",
+    "the booking queue"
+   ],
+   [
+    "Housekeeper",
+    "the housekeeper"
+   ],
+   [
+    "Room Inventory",
+    "the room inventory"
+   ],
+   [
+    "Concierge Desk",
+    "the concierge desk"
+   ],
+   [
+    "Maintenance Team",
+    "the maintenance team"
+   ],
+   [
+    "Guest Folio",
+    "the guest folio"
+   ],
+   [
+    "Minibar",
+    "the minibar"
+   ],
+   [
+    "Floor Supervisor",
+    "the floor supervisor"
+   ]
+  ],
+  "verbs": [
+   [
+    "Sends to",
+    "sends the request to"
+   ],
+   [
+    "Assigns to",
+    "assigns the room to"
+   ],
+   [
+    "Notifies",
+    "notifies"
+   ],
+   [
+    "Books into",
+    "books the guest into"
+   ],
+   [
+    "Hands keys to",
+    "hands the keys to"
+   ],
+   [
+    "Reports to",
+    "reports the status to"
+   ],
+   [
+    "Updates",
+    "updates"
+   ],
+   [
+    "Restocks",
+    "restocks"
+   ],
+   [
+    "Escalates to",
+    "escalates the issue to"
+   ],
+   [
+    "Charges to",
+    "charges the stay to"
+   ],
+   [
+    "Requests from",
+    "requests supplies from"
+   ],
+   [
+    "Forwards to",
+    "forwards the booking to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Room ready?",
+    [
+     "the room is ready",
+     "the room has been cleaned",
+     "housekeeping has cleared the room"
+    ]
+   ],
+   [
+    "Guest checked in?",
+    [
+     "the guest has checked in",
+     "the guest has picked up the key",
+     "check-in is complete"
+    ]
+   ],
+   [
+    "Room available?",
+    [
+     "a room is available",
+     "the inventory shows a free room",
+     "there is a vacancy"
+    ]
+   ],
+   [
+    "Payment received?",
+    [
+     "the payment is received",
+     "the card is charged",
+     "the deposit has cleared"
+    ]
+   ],
+   [
+    "Late checkout?",
+    [
+     "the guest asks for late checkout",
+     "the guest stays past noon"
+    ]
+   ],
+   [
+    "Repair needed?",
+    [
+     "something in the room is broken",
+     "the room needs repair",
+     "the housekeeper finds damage"
+    ]
+   ],
+   [
+    "Booking confirmed?",
+    [
+     "the booking is confirmed",
+     "the guest has a confirmation number",
+     "the reservation is guaranteed"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} clean?",
+    "{} is clean"
+   ],
+   [
+    "{} occupied?",
+    "{} is occupied"
+   ],
+   [
+    "{} out of order?",
+    "{} is out of order"
+   ]
+  ],
+  "steps": [
+   [
+    "Verify Booking",
+    "verify the booking"
+   ],
+   [
+    "Check ID",
+    "check the guest's id"
+   ],
+   [
+    "Assign Room",
+    "assign a room"
+   ],
+   [
+    "Encode Key Card",
+    "encode the key card"
+   ],
+   [
+    "Collect Payment",
+    "collect the payment"
+   ],
+   [
+    "Strip Bed",
+    "strip the bed"
+   ],
+   [
+    "Vacuum Floor",
+    "vacuum the floor"
+   ],
+   [
+    "Sanitize Bathroom",
+    "sanitize the bathroom"
+   ],
+   [
+    "Restock Amenities",
+    "restock the amenities"
+   ],
+   [
+    "Inspect Room",
+    "inspect the room"
+   ],
+   [
+    "Wash Linens",
+    "wash the linens"
+   ],
+   [
+    "Update Status",
+    "update the room status"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "the check passes",
+     "everything looks good"
+    ]
+   ],
+   [
+    "Approved?",
+    [
+     "it is approved",
+     "the supervisor signs off"
+    ]
+   ],
+   [
+    "Completed?",
+    [
+     "it is completed",
+     "the task is done",
+     "it finishes without problems"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Check-In Kiosk",
+    "self check-in kiosk"
+   ],
+   [
+    "Waiting Line",
+    "waiting line of guests"
+   ],
+   [
+    "Keycard Door",
+    "keycard-locked door"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "construction site management",
+  "things": [
+   [
+    "Site Office",
+    "the site office"
+   ],
+   [
+    "Project Manager",
+    "the project manager"
+   ],
+   [
+    "Site Foreman",
+    "the site foreman"
+   ],
+   [
+    "Tower Crane",
+    "the tower crane"
+   ],
+   [
+    "Material Yard",
+    "the material yard"
+   ],
+   [
+    "Safety Officer",
+    "the safety officer"
+   ],
+   [
+    "Building Inspector",
+    "the building inspector"
+   ],
+   [
+    "Concrete Crew",
+    "the concrete crew"
+   ],
+   [
+    "Subcontractor",
+    "the subcontractor"
+   ],
+   [
+    "Permit Desk",
+    "the permit desk"
+   ],
+   [
+    "Delivery Gate",
+    "the delivery gate"
+   ],
+   [
+    "Scaffold Team",
+    "the scaffold team"
+   ],
+   [
+    "Excavator",
+    "the excavator"
+   ],
+   [
+    "Plan Archive",
+    "the plan archive"
+   ]
+  ],
+  "verbs": [
+   [
+    "assigns to",
+    "assigns the task to"
+   ],
+   [
+    "sends to",
+    "sends the request to"
+   ],
+   [
+    "reports to",
+    "reports progress to"
+   ],
+   [
+    "orders from",
+    "orders materials from"
+   ],
+   [
+    "delivers to",
+    "delivers the materials to"
+   ],
+   [
+    "escalates to",
+    "escalates the issue to"
+   ],
+   [
+    "approves for",
+    "approves the work for"
+   ],
+   [
+    "hands over to",
+    "hands the area over to"
+   ],
+   [
+    "notifies",
+    "notifies"
+   ],
+   [
+    "requests inspection",
+    "requests an inspection from"
+   ],
+   [
+    "issues to",
+    "issues the permit to"
+   ],
+   [
+    "logs hours with",
+    "logs the crew hours with"
+   ]
+  ],
+  "conditions": [
+   [
+    "Permit approved?",
+    [
+     "the permit is approved",
+     "the permit has been granted"
+    ]
+   ],
+   [
+    "Materials on site?",
+    [
+     "the materials are on site",
+     "the delivery has arrived",
+     "the materials are in stock"
+    ]
+   ],
+   [
+    "Weather clear?",
+    [
+     "the weather is clear",
+     "conditions are safe to work",
+     "there is no rain or high wind"
+    ]
+   ],
+   [
+    "Inspection passed?",
+    [
+     "the inspection passes",
+     "the inspector signs off",
+     "the work meets code"
+    ]
+   ],
+   [
+    "Crew on site?",
+    [
+     "the crew is on site",
+     "the workers have arrived"
+    ]
+   ],
+   [
+    "Area safe?",
+    [
+     "the area is safe",
+     "there are no hazards",
+     "the zone is cleared for work"
+    ]
+   ],
+   [
+    "Budget available?",
+    [
+     "the budget covers it",
+     "there are enough funds left"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} available?",
+    "{} is available"
+   ],
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ],
+   [
+    "{} on site?",
+    "{} is on site"
+   ]
+  ],
+  "steps": [
+   [
+    "Survey Site",
+    "survey the site"
+   ],
+   [
+    "Mark Boundaries",
+    "mark the boundaries"
+   ],
+   [
+    "Dig Foundation",
+    "dig the foundation"
+   ],
+   [
+    "Check Rebar",
+    "check the rebar"
+   ],
+   [
+    "Pour Concrete",
+    "pour the concrete"
+   ],
+   [
+    "Test Samples",
+    "test the concrete samples"
+   ],
+   [
+    "Erect Scaffold",
+    "erect the scaffolding"
+   ],
+   [
+    "Log Delivery",
+    "log the delivery"
+   ],
+   [
+    "Hold Safety Briefing",
+    "hold the safety briefing"
+   ],
+   [
+    "Update Schedule",
+    "update the schedule"
+   ],
+   [
+    "Fence Perimeter",
+    "fence the perimeter"
+   ],
+   [
+    "Sign Off Work",
+    "sign off the work"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "it meets the spec"
+    ]
+   ],
+   [
+    "Done on time?",
+    [
+     "it finishes on schedule",
+     "it is done on time"
+    ]
+   ],
+   [
+    "Defect free?",
+    [
+     "no defects are found",
+     "everything looks sound",
+     "it is free of defects"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Security Fence",
+    "perimeter fence"
+   ],
+   [
+    "Safety Checkpoint",
+    "safety checkpoint"
+   ],
+   [
+    "Wheel Wash",
+    "wheel wash station"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "farming and harvest",
+  "things": [
+   [
+    "North Field",
+    "the north field"
+   ],
+   [
+    "Tractor",
+    "the tractor"
+   ],
+   [
+    "Combine Harvester",
+    "the combine harvester"
+   ],
+   [
+    "Seed Drill",
+    "the seed drill"
+   ],
+   [
+    "Irrigation Pump",
+    "the irrigation pump"
+   ],
+   [
+    "Grain Silo",
+    "the grain silo"
+   ],
+   [
+    "Packing Shed",
+    "the packing shed"
+   ],
+   [
+    "Cold Store",
+    "the cold store"
+   ],
+   [
+    "Harvest Crew",
+    "the harvest crew"
+   ],
+   [
+    "Seed Store",
+    "the seed store"
+   ],
+   [
+    "Orchard Block",
+    "the orchard block"
+   ],
+   [
+    "Wash Station",
+    "the wash station"
+   ],
+   [
+    "Delivery Truck",
+    "the delivery truck"
+   ],
+   [
+    "Farm Manager",
+    "the farm manager"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the crop to"
+   ],
+   [
+    "plants in",
+    "plants the seed in"
+   ],
+   [
+    "waters",
+    "waters"
+   ],
+   [
+    "hauls to",
+    "hauls the harvest to"
+   ],
+   [
+    "loads onto",
+    "loads the crates onto"
+   ],
+   [
+    "stores in",
+    "stores the produce in"
+   ],
+   [
+    "supplies",
+    "supplies seed to"
+   ],
+   [
+    "fertilizes",
+    "spreads fertilizer on"
+   ],
+   [
+    "reports to",
+    "reports the yield to"
+   ],
+   [
+    "cuts",
+    "cuts the crop in"
+   ],
+   [
+    "washes at",
+    "washes the produce at"
+   ],
+   [
+    "delivers to",
+    "delivers the load to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Crop ripe?",
+    [
+     "the crop is ripe",
+     "the fruit is ready to pick",
+     "the grain has matured"
+    ]
+   ],
+   [
+    "Soil moist?",
+    [
+     "the soil is moist",
+     "the ground has enough water"
+    ]
+   ],
+   [
+    "Weather dry?",
+    [
+     "the weather is dry",
+     "no rain is forecast",
+     "the day stays clear"
+    ]
+   ],
+   [
+    "Silo full?",
+    [
+     "the silo is full",
+     "the silo has no space left"
+    ]
+   ],
+   [
+    "Frost expected?",
+    [
+     "frost is expected",
+     "the temperature will drop below freezing",
+     "a frost warning is out"
+    ]
+   ],
+   [
+    "Crew available?",
+    [
+     "the crew is available",
+     "enough pickers are on hand"
+    ]
+   ],
+   [
+    "Pests found?",
+    [
+     "pests are found",
+     "insects are damaging the plants",
+     "an infestation is spotted"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} ripe?",
+    "{} is ripe"
+   ],
+   [
+    "{} full?",
+    "{} is full"
+   ],
+   [
+    "{} running?",
+    "{} is running"
+   ]
+  ],
+  "steps": [
+   [
+    "Plow Soil",
+    "plow the soil"
+   ],
+   [
+    "Sow Seed",
+    "sow the seed"
+   ],
+   [
+    "Water Crops",
+    "water the crops"
+   ],
+   [
+    "Spread Fertilizer",
+    "spread the fertilizer"
+   ],
+   [
+    "Weed Rows",
+    "weed the rows"
+   ],
+   [
+    "Spray Pests",
+    "spray for pests"
+   ],
+   [
+    "Scout Field",
+    "scout the field for ripeness"
+   ],
+   [
+    "Cut Crop",
+    "cut the crop"
+   ],
+   [
+    "Sort Produce",
+    "sort the produce by grade"
+   ],
+   [
+    "Wash Produce",
+    "wash the produce"
+   ],
+   [
+    "Pack Crates",
+    "pack the crates"
+   ],
+   [
+    "Weigh Load",
+    "weigh the load"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Good yield?",
+    [
+     "the yield is good",
+     "the harvest beats expectations",
+     "the crop comes in heavy"
+    ]
+   ],
+   [
+    "Grade passed?",
+    [
+     "the produce passes grading",
+     "the quality meets the standard"
+    ]
+   ],
+   [
+    "Done in time?",
+    [
+     "the work finishes in time",
+     "the job is done before the deadline",
+     "nothing is left in the field"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Weigh Bridge",
+    "weigh bridge"
+   ],
+   [
+    "Sorting Belt",
+    "sorting belt"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "bank loan approval",
+  "things": [
+   [
+    "Loan Officer",
+    "the loan officer"
+   ],
+   [
+    "Applicant Portal",
+    "the applicant portal"
+   ],
+   [
+    "Credit Bureau",
+    "the credit bureau"
+   ],
+   [
+    "Underwriter",
+    "the underwriter"
+   ],
+   [
+    "Document Vault",
+    "the document vault"
+   ],
+   [
+    "Risk Engine",
+    "the risk engine"
+   ],
+   [
+    "Appraisal Team",
+    "the appraisal team"
+   ],
+   [
+    "Compliance Desk",
+    "the compliance desk"
+   ],
+   [
+    "Loan Committee",
+    "the loan committee"
+   ],
+   [
+    "Core Banking",
+    "the core banking system"
+   ],
+   [
+    "Closing Department",
+    "the closing department"
+   ],
+   [
+    "Fraud Unit",
+    "the fraud unit"
+   ],
+   [
+    "Pricing Engine",
+    "the pricing engine"
+   ],
+   [
+    "Notification Service",
+    "the notification service"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the application to"
+   ],
+   [
+    "forwards to",
+    "forwards the file to"
+   ],
+   [
+    "requests from",
+    "requests a report from"
+   ],
+   [
+    "submits to",
+    "submits the request to"
+   ],
+   [
+    "escalates to",
+    "escalates the case to"
+   ],
+   [
+    "stores in",
+    "stores the documents in"
+   ],
+   [
+    "assigns to",
+    "assigns the case to"
+   ],
+   [
+    "returns to",
+    "returns the file to"
+   ],
+   [
+    "notifies",
+    "sends a status update to"
+   ],
+   [
+    "reports to",
+    "reports the findings to"
+   ],
+   [
+    "releases to",
+    "releases the funds to"
+   ],
+   [
+    "checks with",
+    "checks the details with"
+   ]
+  ],
+  "conditions": [
+   [
+    "Credit score high enough?",
+    [
+     "the credit score meets the minimum",
+     "the applicant has a strong credit score",
+     "the score is above the cutoff"
+    ]
+   ],
+   [
+    "Documents complete?",
+    [
+     "all required documents are in",
+     "the file has everything it needs",
+     "nothing is missing from the file"
+    ]
+   ],
+   [
+    "Debt ratio acceptable?",
+    [
+     "the debt to income ratio is within limits",
+     "the applicant can afford the payments",
+     "the ratio is under the maximum"
+    ]
+   ],
+   [
+    "Collateral sufficient?",
+    [
+     "the property value covers the loan",
+     "the appraisal supports the amount",
+     "the collateral is worth enough"
+    ]
+   ],
+   [
+    "Fraud suspected?",
+    [
+     "the application looks fraudulent",
+     "the fraud check raises a flag",
+     "something in the file looks suspicious"
+    ]
+   ],
+   [
+    "Amount over limit?",
+    [
+     "the loan exceeds the officer's authority",
+     "the amount is above the approval limit",
+     "the request is too large for one approver"
+    ]
+   ],
+   [
+    "Identity verified?",
+    [
+     "the applicant's identity is confirmed",
+     "the id checks out",
+     "the identity matches the records"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} available?",
+    "{} is available"
+   ],
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ],
+   [
+    "{} offline?",
+    "{} is offline"
+   ]
+  ],
+  "steps": [
+   [
+    "Collect Application",
+    "collect the application"
+   ],
+   [
+    "Verify Identity",
+    "verify the applicant's identity"
+   ],
+   [
+    "Pull Credit",
+    "pull the credit report"
+   ],
+   [
+    "Check Income",
+    "verify income and employment"
+   ],
+   [
+    "Calculate Ratio",
+    "calculate the debt to income ratio"
+   ],
+   [
+    "Order Appraisal",
+    "order a property appraisal"
+   ],
+   [
+    "Score Risk",
+    "score the risk profile"
+   ],
+   [
+    "Screen Fraud",
+    "screen the file for fraud"
+   ],
+   [
+    "Set Terms",
+    "set the rate and terms"
+   ],
+   [
+    "Issue Offer",
+    "issue the loan offer"
+   ],
+   [
+    "Collect Signatures",
+    "collect the signatures"
+   ],
+   [
+    "Disburse Funds",
+    "disburse the funds"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "the check comes back clean",
+     "everything checks out"
+    ]
+   ],
+   [
+    "Complete?",
+    [
+     "the file is complete",
+     "all items are received"
+    ]
+   ],
+   [
+    "Approved?",
+    [
+     "it is approved",
+     "the reviewer signs off",
+     "the decision is a yes"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Intake Queue",
+    "intake queue"
+   ],
+   [
+    "Application Gateway",
+    "application gateway"
+   ],
+   [
+    "Pre-Screening Filter",
+    "pre-screening filter"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "emergency police dispatch",
+  "things": [
+   [
+    "Call Taker",
+    "the call taker"
+   ],
+   [
+    "Dispatcher",
+    "the dispatcher"
+   ],
+   [
+    "Emergency Caller",
+    "the caller"
+   ],
+   [
+    "CAD System",
+    "the cad system"
+   ],
+   [
+    "Patrol Unit",
+    "the patrol unit"
+   ],
+   [
+    "Shift Supervisor",
+    "the shift supervisor"
+   ],
+   [
+    "Radio Channel",
+    "the radio channel"
+   ],
+   [
+    "Incident Record",
+    "the incident record"
+   ],
+   [
+    "Location Database",
+    "the location database"
+   ],
+   [
+    "Fire Department",
+    "the fire department"
+   ],
+   [
+    "Ambulance Service",
+    "the ambulance service"
+   ],
+   [
+    "Hold Queue",
+    "the hold queue"
+   ],
+   [
+    "K9 Unit",
+    "the k9 unit"
+   ],
+   [
+    "Records Archive",
+    "the records archive"
+   ]
+  ],
+  "verbs": [
+   [
+    "Sends to",
+    "sends the call to"
+   ],
+   [
+    "Dispatches to",
+    "dispatches units to"
+   ],
+   [
+    "Alerts",
+    "alerts"
+   ],
+   [
+    "Escalates to",
+    "escalates the incident to"
+   ],
+   [
+    "Transfers to",
+    "transfers the caller to"
+   ],
+   [
+    "Logs in",
+    "logs the details in"
+   ],
+   [
+    "Notifies",
+    "notifies"
+   ],
+   [
+    "Queries",
+    "queries"
+   ],
+   [
+    "Assigns to",
+    "assigns the incident to"
+   ],
+   [
+    "Reports to",
+    "reports status to"
+   ],
+   [
+    "Broadcasts on",
+    "broadcasts the call on"
+   ],
+   [
+    "Archives in",
+    "archives the record in"
+   ]
+  ],
+  "conditions": [
+   [
+    "Life Threatening?",
+    [
+     "the situation is life threatening",
+     "someone's life is in danger",
+     "the call is a top priority emergency"
+    ]
+   ],
+   [
+    "Location Confirmed?",
+    [
+     "the location is confirmed",
+     "the address has been verified"
+    ]
+   ],
+   [
+    "Unit Available?",
+    [
+     "a unit is available",
+     "there is a free unit nearby",
+     "a unit can respond right away"
+    ]
+   ],
+   [
+    "Suspect Armed?",
+    [
+     "the suspect is armed",
+     "a weapon is involved"
+    ]
+   ],
+   [
+    "Medical Aid Needed?",
+    [
+     "medical aid is needed",
+     "someone is injured",
+     "an ambulance is required"
+    ]
+   ],
+   [
+    "Caller Still Online?",
+    [
+     "the caller is still on the line",
+     "the caller has not hung up"
+    ]
+   ],
+   [
+    "Duplicate Call?",
+    [
+     "the call is a duplicate",
+     "the incident was already reported",
+     "another caller reported the same event"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} available?",
+    "{} is available"
+   ],
+   [
+    "{} on scene?",
+    "{} is on scene"
+   ],
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ]
+  ],
+  "steps": [
+   [
+    "Answer Call",
+    "answer the call"
+   ],
+   [
+    "Verify Location",
+    "verify the caller's location"
+   ],
+   [
+    "Assess Priority",
+    "assess the call priority"
+   ],
+   [
+    "Create Incident",
+    "create the incident record"
+   ],
+   [
+    "Select Unit",
+    "select the closest unit"
+   ],
+   [
+    "Dispatch Unit",
+    "dispatch the unit"
+   ],
+   [
+    "Relay Details",
+    "relay the details over the radio"
+   ],
+   [
+    "Track Response",
+    "track the unit's response"
+   ],
+   [
+    "Update Notes",
+    "update the incident notes"
+   ],
+   [
+    "Request Backup",
+    "request backup"
+   ],
+   [
+    "Notify Supervisor",
+    "notify the supervisor"
+   ],
+   [
+    "Close Incident",
+    "close the incident"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Succeeded?",
+    [
+     "it succeeds",
+     "it goes through"
+    ]
+   ],
+   [
+    "Acknowledged?",
+    [
+     "the unit acknowledges",
+     "it is acknowledged"
+    ]
+   ],
+   [
+    "Resolved?",
+    [
+     "the issue is resolved",
+     "it is resolved on scene"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Radio Gateway",
+    "radio gateway"
+   ],
+   [
+    "Triage Filter",
+    "triage filter"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "pharmaceutical drug trials",
+  "things": [
+   [
+    "Trial Site",
+    "the trial site"
+   ],
+   [
+    "Principal Investigator",
+    "the principal investigator"
+   ],
+   [
+    "Study Coordinator",
+    "the study coordinator"
+   ],
+   [
+    "Ethics Board",
+    "the ethics board"
+   ],
+   [
+    "Sponsor",
+    "the sponsor"
+   ],
+   [
+    "Patient Registry",
+    "the patient registry"
+   ],
+   [
+    "Randomization System",
+    "the randomization system"
+   ],
+   [
+    "Pharmacy",
+    "the trial pharmacy"
+   ],
+   [
+    "Data Monitoring Committee",
+    "the data monitoring committee"
+   ],
+   [
+    "Electronic Data Capture",
+    "the electronic data capture system"
+   ],
+   [
+    "Central Laboratory",
+    "the central lab"
+   ],
+   [
+    "Regulatory Agency",
+    "the regulatory agency"
+   ],
+   [
+    "Safety Desk",
+    "the drug safety desk"
+   ],
+   [
+    "Clinical Research Associate",
+    "the clinical research associate"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the documents to"
+   ],
+   [
+    "submits to",
+    "submits the application to"
+   ],
+   [
+    "enrolls in",
+    "enrolls the participant in"
+   ],
+   [
+    "assigns to",
+    "assigns the participant to"
+   ],
+   [
+    "dispenses to",
+    "dispenses the study drug to"
+   ],
+   [
+    "reports to",
+    "reports the adverse event to"
+   ],
+   [
+    "reviews for",
+    "reviews the data for"
+   ],
+   [
+    "approves for",
+    "approves the protocol for"
+   ],
+   [
+    "ships to",
+    "ships the samples to"
+   ],
+   [
+    "notifies",
+    "notifies"
+   ],
+   [
+    "audits",
+    "audits"
+   ],
+   [
+    "unblinds for",
+    "unblinds the treatment code for"
+   ]
+  ],
+  "conditions": [
+   [
+    "Consent signed?",
+    [
+     "the participant has signed the consent form",
+     "consent is on file",
+     "the informed consent is signed"
+    ]
+   ],
+   [
+    "Eligible?",
+    [
+     "the participant meets the inclusion criteria",
+     "the participant is eligible for the study",
+     "the screening criteria are met"
+    ]
+   ],
+   [
+    "Protocol approved?",
+    [
+     "the ethics board approves the protocol",
+     "the protocol has been approved",
+     "approval is granted"
+    ]
+   ],
+   [
+    "Serious adverse event?",
+    [
+     "the event is serious",
+     "a serious adverse event occurred",
+     "the event meets the serious criteria"
+    ]
+   ],
+   [
+    "Dose tolerated?",
+    [
+     "the participant tolerates the dose",
+     "the dose is well tolerated"
+    ]
+   ],
+   [
+    "Samples intact?",
+    [
+     "the samples arrive intact",
+     "the samples are in good condition",
+     "the shipment is undamaged"
+    ]
+   ],
+   [
+    "Interim data clean?",
+    [
+     "the interim data is clean",
+     "there are no open data queries",
+     "all data queries are resolved"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} approved?",
+    "{} is approved"
+   ],
+   [
+    "{} audited?",
+    "{} has been audited"
+   ],
+   [
+    "{} blinded?",
+    "{} is blinded"
+   ]
+  ],
+  "steps": [
+   [
+    "Screen Participant",
+    "screen the participant"
+   ],
+   [
+    "Obtain Consent",
+    "obtain informed consent"
+   ],
+   [
+    "Randomize Participant",
+    "randomize the participant"
+   ],
+   [
+    "Dispense Drug",
+    "dispense the study drug"
+   ],
+   [
+    "Collect Blood",
+    "collect the blood samples"
+   ],
+   [
+    "Record Vitals",
+    "record the vital signs"
+   ],
+   [
+    "Enter Data",
+    "enter the visit data"
+   ],
+   [
+    "Resolve Queries",
+    "resolve the data queries"
+   ],
+   [
+    "Report Event",
+    "report the adverse event"
+   ],
+   [
+    "Check Compliance",
+    "check pill compliance"
+   ],
+   [
+    "Lock Database",
+    "lock the database"
+   ],
+   [
+    "Analyze Results",
+    "analyze the efficacy results"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "the check passes",
+     "everything looks fine"
+    ]
+   ],
+   [
+    "Completed on time?",
+    [
+     "it finishes within the visit window",
+     "it is completed on time"
+    ]
+   ],
+   [
+    "Deviation found?",
+    [
+     "a protocol deviation is found",
+     "the step violates the protocol"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Screening Desk",
+    "screening desk"
+   ],
+   [
+    "Pharmacy Counter",
+    "blinded pharmacy counter"
+   ],
+   [
+    "Consent Review",
+    "consent review station"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "water treatment plant",
+  "things": [
+   [
+    "Intake Screen",
+    "the intake screen"
+   ],
+   [
+    "Raw Water Pump",
+    "the raw water pump"
+   ],
+   [
+    "Coagulation Tank",
+    "the coagulation tank"
+   ],
+   [
+    "Flocculation Basin",
+    "the flocculation basin"
+   ],
+   [
+    "Clarifier",
+    "the clarifier"
+   ],
+   [
+    "Sand Filter",
+    "the sand filter"
+   ],
+   [
+    "Carbon Contactor",
+    "the carbon contactor"
+   ],
+   [
+    "Chlorine Doser",
+    "the chlorine doser"
+   ],
+   [
+    "Clearwell",
+    "the clearwell"
+   ],
+   [
+    "High Lift Pump",
+    "the high lift pump"
+   ],
+   [
+    "Sludge Thickener",
+    "the sludge thickener"
+   ],
+   [
+    "Control Room",
+    "the control room"
+   ],
+   [
+    "Lab Analyzer",
+    "the lab analyzer"
+   ],
+   [
+    "Storage Reservoir",
+    "the storage reservoir"
+   ]
+  ],
+  "verbs": [
+   [
+    "pumps to",
+    "pumps water to"
+   ],
+   [
+    "feeds",
+    "feeds raw water into"
+   ],
+   [
+    "doses",
+    "doses chemicals into"
+   ],
+   [
+    "drains to",
+    "drains sludge to"
+   ],
+   [
+    "sends reading to",
+    "sends the reading to"
+   ],
+   [
+    "backwashes to",
+    "backwashes into"
+   ],
+   [
+    "alerts",
+    "sends an alarm to"
+   ],
+   [
+    "samples from",
+    "takes a sample from"
+   ],
+   [
+    "diverts to",
+    "diverts the flow to"
+   ],
+   [
+    "returns to",
+    "returns the water to"
+   ],
+   [
+    "discharges to",
+    "discharges treated water to"
+   ],
+   [
+    "monitors",
+    "keeps watch on"
+   ]
+  ],
+  "conditions": [
+   [
+    "Turbidity High?",
+    [
+     "the turbidity is high",
+     "turbidity is above the limit",
+     "the water looks cloudy"
+    ]
+   ],
+   [
+    "Chlorine Low?",
+    [
+     "the chlorine residual is low",
+     "chlorine is below target"
+    ]
+   ],
+   [
+    "Filter Clogged?",
+    [
+     "the filter is clogged",
+     "head loss is too high",
+     "the filter needs a backwash"
+    ]
+   ],
+   [
+    "Tank Full?",
+    [
+     "the tank is full",
+     "the level is at maximum"
+    ]
+   ],
+   [
+    "pH In Range?",
+    [
+     "the ph is in range",
+     "the ph is within limits",
+     "the ph is acceptable"
+    ]
+   ],
+   [
+    "Pump Running?",
+    [
+     "the pump is running",
+     "the pump is on"
+    ]
+   ],
+   [
+    "Sample Clean?",
+    [
+     "the sample is clean",
+     "the lab results are clear",
+     "no contaminants are found"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} clogged?",
+    "{} is clogged"
+   ],
+   [
+    "{} running?",
+    "{} is running"
+   ],
+   [
+    "{} full?",
+    "{} is full"
+   ]
+  ],
+  "steps": [
+   [
+    "Screen Debris",
+    "screen out the debris"
+   ],
+   [
+    "Add Coagulant",
+    "add the coagulant"
+   ],
+   [
+    "Mix Slowly",
+    "mix the water slowly"
+   ],
+   [
+    "Settle Solids",
+    "let the solids settle"
+   ],
+   [
+    "Filter Water",
+    "filter the water"
+   ],
+   [
+    "Backwash Filter",
+    "backwash the filter"
+   ],
+   [
+    "Adjust pH",
+    "adjust the ph"
+   ],
+   [
+    "Dose Chlorine",
+    "dose the chlorine"
+   ],
+   [
+    "Hold Contact Time",
+    "hold the water for contact time"
+   ],
+   [
+    "Test Sample",
+    "test a water sample"
+   ],
+   [
+    "Remove Sludge",
+    "remove the settled sludge"
+   ],
+   [
+    "Log Readings",
+    "log the readings"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Sample Passed?",
+    [
+     "the sample passes",
+     "the readings are within limits",
+     "the test comes back clean"
+    ]
+   ],
+   [
+    "Dose Correct?",
+    [
+     "the dose is correct",
+     "the dose matches the setpoint"
+    ]
+   ],
+   [
+    "Water Clear?",
+    [
+     "the water is clear",
+     "the water settles well",
+     "the turbidity drops"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Static Mixer",
+    "static mixer"
+   ],
+   [
+    "Flow Meter",
+    "flow meter"
+   ],
+   [
+    "Strainer",
+    "strainer"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "warehouse robots",
+  "things": [
+   [
+    "Pick Robot",
+    "the pick robot"
+   ],
+   [
+    "Charging Dock",
+    "the charging dock"
+   ],
+   [
+    "Fleet Manager",
+    "the fleet manager"
+   ],
+   [
+    "Warehouse System",
+    "the warehouse management system"
+   ],
+   [
+    "Storage Rack",
+    "the storage rack"
+   ],
+   [
+    "Conveyor Belt",
+    "the conveyor belt"
+   ],
+   [
+    "Packing Station",
+    "the packing station"
+   ],
+   [
+    "Sorting Hub",
+    "the sorting hub"
+   ],
+   [
+    "Loading Bay",
+    "the loading bay"
+   ],
+   [
+    "Inventory Database",
+    "the inventory database"
+   ],
+   [
+    "Order Queue",
+    "the order queue"
+   ],
+   [
+    "Safety Scanner",
+    "the safety scanner"
+   ],
+   [
+    "Tote Bin",
+    "the tote bin"
+   ],
+   [
+    "Shipping Lane",
+    "the shipping lane"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the task to"
+   ],
+   [
+    "assigns to",
+    "assigns the order to"
+   ],
+   [
+    "carries to",
+    "carries the tote to"
+   ],
+   [
+    "scans at",
+    "scans the item at"
+   ],
+   [
+    "reports to",
+    "reports its status to"
+   ],
+   [
+    "docks at",
+    "docks at"
+   ],
+   [
+    "loads onto",
+    "loads the package onto"
+   ],
+   [
+    "unloads from",
+    "unloads the goods from"
+   ],
+   [
+    "updates",
+    "updates the stock count in"
+   ],
+   [
+    "routes to",
+    "routes the package to"
+   ],
+   [
+    "requests from",
+    "requests a new task from"
+   ],
+   [
+    "hands off to",
+    "hands the item off to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Battery low?",
+    [
+     "the battery is low",
+     "the charge falls below the limit",
+     "the robot is running out of power"
+    ]
+   ],
+   [
+    "Item in stock?",
+    [
+     "the item is in stock",
+     "the inventory shows enough units",
+     "the rack still holds the item"
+    ]
+   ],
+   [
+    "Path clear?",
+    [
+     "the path is clear",
+     "nothing blocks the aisle",
+     "the route is free of obstacles"
+    ]
+   ],
+   [
+    "Order urgent?",
+    [
+     "the order is urgent",
+     "the order is marked as priority",
+     "the customer needs same day delivery"
+    ]
+   ],
+   [
+    "Tote full?",
+    [
+     "the tote is full",
+     "the bin has no space left",
+     "the tote has reached its weight limit"
+    ]
+   ],
+   [
+    "Barcode readable?",
+    [
+     "the barcode is readable",
+     "the scanner reads the label",
+     "the label scans cleanly"
+    ]
+   ],
+   [
+    "Dock free?",
+    [
+     "the dock is free",
+     "a charging slot is open",
+     "no robot is using the dock"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} idle?",
+    "{} is idle"
+   ],
+   [
+    "{} full?",
+    "{} is full"
+   ],
+   [
+    "{} offline?",
+    "{} is offline"
+   ]
+  ],
+  "steps": [
+   [
+    "Receive Order",
+    "receive the order"
+   ],
+   [
+    "Locate Item",
+    "locate the item on the rack"
+   ],
+   [
+    "Plan Route",
+    "plan the route through the aisles"
+   ],
+   [
+    "Navigate Aisle",
+    "drive down the aisle"
+   ],
+   [
+    "Pick Item",
+    "pick the item from the shelf"
+   ],
+   [
+    "Scan Barcode",
+    "scan the barcode"
+   ],
+   [
+    "Place In Tote",
+    "place the item in the tote"
+   ],
+   [
+    "Transport Tote",
+    "transport the tote to the sorting hub"
+   ],
+   [
+    "Sort Package",
+    "sort the package by destination"
+   ],
+   [
+    "Pack Order",
+    "pack the order into a box"
+   ],
+   [
+    "Print Label",
+    "print the shipping label"
+   ],
+   [
+    "Recharge Battery",
+    "return to the dock and recharge the battery"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Pick successful?",
+    [
+     "the pick succeeds",
+     "the robot grips the item",
+     "the item is secured in the gripper"
+    ]
+   ],
+   [
+    "Scan matched?",
+    [
+     "the scan matches the order",
+     "the barcode matches the record"
+    ]
+   ],
+   [
+    "Delivery complete?",
+    [
+     "the delivery completes",
+     "the tote arrives at its destination",
+     "the handoff goes through"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Barcode Reader",
+    "barcode reader"
+   ],
+   [
+    "Order Buffer",
+    "buffer queue for incoming orders"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "ride-sharing app",
+  "things": [
+   [
+    "Rider App",
+    "the rider app"
+   ],
+   [
+    "Driver App",
+    "the driver app"
+   ],
+   [
+    "Dispatch Service",
+    "the dispatch service"
+   ],
+   [
+    "Matching Engine",
+    "the matching engine"
+   ],
+   [
+    "Pricing Service",
+    "the pricing service"
+   ],
+   [
+    "Payment Gateway",
+    "the payment gateway"
+   ],
+   [
+    "Trip Database",
+    "the trip database"
+   ],
+   [
+    "Maps Service",
+    "the maps service"
+   ],
+   [
+    "Notification Service",
+    "the notification service"
+   ],
+   [
+    "Driver Pool",
+    "the pool of nearby drivers"
+   ],
+   [
+    "Ride Request",
+    "the ride request"
+   ],
+   [
+    "Rating Service",
+    "the rating service"
+   ],
+   [
+    "Fraud Checker",
+    "the fraud checker"
+   ],
+   [
+    "Support Desk",
+    "the support desk"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the request to"
+   ],
+   [
+    "notifies",
+    "notifies"
+   ],
+   [
+    "asks",
+    "asks"
+   ],
+   [
+    "charges",
+    "charges"
+   ],
+   [
+    "stores in",
+    "stores the trip in"
+   ],
+   [
+    "assigns to",
+    "assigns the ride to"
+   ],
+   [
+    "looks up",
+    "looks up the route in"
+   ],
+   [
+    "reports to",
+    "reports the status to"
+   ],
+   [
+    "validates with",
+    "validates the rider with"
+   ],
+   [
+    "updates",
+    "updates"
+   ],
+   [
+    "routes to",
+    "routes the trip to"
+   ],
+   [
+    "escalates to",
+    "escalates the issue to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Driver found?",
+    [
+     "a driver is found",
+     "a nearby driver is available",
+     "the match succeeds"
+    ]
+   ],
+   [
+    "Driver accepts?",
+    [
+     "the driver accepts the offer",
+     "the driver taps accept",
+     "the offer is accepted"
+    ]
+   ],
+   [
+    "Payment approved?",
+    [
+     "the payment is approved",
+     "the card is accepted",
+     "the charge goes through"
+    ]
+   ],
+   [
+    "Surge active?",
+    [
+     "surge pricing is active",
+     "demand is high",
+     "the fare multiplier is above one"
+    ]
+   ],
+   [
+    "Rider verified?",
+    [
+     "the rider is verified",
+     "the rider passes the identity check"
+    ]
+   ],
+   [
+    "Trip completed?",
+    [
+     "the trip is completed",
+     "the rider reaches the destination",
+     "the driver ends the trip"
+    ]
+   ],
+   [
+    "Rider cancelled?",
+    [
+     "the rider cancels the ride",
+     "the request is cancelled",
+     "the rider backs out"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} online?",
+    "{} is online"
+   ],
+   [
+    "{} busy?",
+    "{} is busy"
+   ],
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ]
+  ],
+  "steps": [
+   [
+    "Request Ride",
+    "request a ride"
+   ],
+   [
+    "Estimate Fare",
+    "estimate the fare"
+   ],
+   [
+    "Find Drivers",
+    "find nearby drivers"
+   ],
+   [
+    "Match Driver",
+    "match the best driver"
+   ],
+   [
+    "Send Offer",
+    "send the offer to the driver"
+   ],
+   [
+    "Navigate Pickup",
+    "navigate to the pickup point"
+   ],
+   [
+    "Start Trip",
+    "start the trip"
+   ],
+   [
+    "Track Route",
+    "track the route"
+   ],
+   [
+    "End Trip",
+    "end the trip"
+   ],
+   [
+    "Charge Rider",
+    "charge the rider"
+   ],
+   [
+    "Pay Driver",
+    "pay the driver"
+   ],
+   [
+    "Rate Trip",
+    "rate the trip"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Succeeded?",
+    [
+     "it succeeds",
+     "it goes through",
+     "it works"
+    ]
+   ],
+   [
+    "Confirmed?",
+    [
+     "it is confirmed",
+     "the other side confirms",
+     "the confirmation comes back"
+    ]
+   ],
+   [
+    "Completed in time?",
+    [
+     "it finishes in time",
+     "it completes before the timeout"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "API Gateway",
+    "api gateway"
+   ],
+   [
+    "Request Queue",
+    "request queue"
+   ],
+   [
+    "Rate Limiter",
+    "rate limiter"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "food delivery app",
+  "things": [
+   [
+    "Customer App",
+    "the customer app"
+   ],
+   [
+    "Restaurant Tablet",
+    "the restaurant tablet"
+   ],
+   [
+    "Driver App",
+    "the driver app"
+   ],
+   [
+    "Order Service",
+    "the order service"
+   ],
+   [
+    "Payment Gateway",
+    "the payment gateway"
+   ],
+   [
+    "Menu Catalog",
+    "the menu catalog"
+   ],
+   [
+    "Dispatch Engine",
+    "the dispatch engine"
+   ],
+   [
+    "Kitchen Display",
+    "the kitchen display"
+   ],
+   [
+    "Delivery Driver",
+    "the delivery driver"
+   ],
+   [
+    "Notification Service",
+    "the notification service"
+   ],
+   [
+    "Promo Engine",
+    "the promo engine"
+   ],
+   [
+    "Support Desk",
+    "the support desk"
+   ],
+   [
+    "Rating Service",
+    "the rating service"
+   ],
+   [
+    "Map Service",
+    "the map service"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the order to"
+   ],
+   [
+    "notifies",
+    "sends a notification to"
+   ],
+   [
+    "charges via",
+    "charges the customer through"
+   ],
+   [
+    "assigns to",
+    "assigns the delivery to"
+   ],
+   [
+    "requests from",
+    "requests the data from"
+   ],
+   [
+    "updates",
+    "updates the status on"
+   ],
+   [
+    "routes to",
+    "routes the request to"
+   ],
+   [
+    "confirms with",
+    "confirms the order with"
+   ],
+   [
+    "reports to",
+    "reports the status to"
+   ],
+   [
+    "refunds through",
+    "refunds the payment through"
+   ],
+   [
+    "looks up in",
+    "looks up the item in"
+   ],
+   [
+    "tracks on",
+    "tracks the driver on"
+   ]
+  ],
+  "conditions": [
+   [
+    "Payment approved?",
+    [
+     "the payment is approved",
+     "the card is accepted",
+     "the charge goes through"
+    ]
+   ],
+   [
+    "Restaurant accepts?",
+    [
+     "the restaurant accepts the order",
+     "the restaurant confirms it can make the order"
+    ]
+   ],
+   [
+    "Driver available?",
+    [
+     "a driver is available",
+     "a nearby driver is free",
+     "there is a driver ready to take the job"
+    ]
+   ],
+   [
+    "Item in stock?",
+    [
+     "the item is in stock",
+     "the item is still available",
+     "the kitchen has the ingredients"
+    ]
+   ],
+   [
+    "Promo valid?",
+    [
+     "the promo code is valid",
+     "the coupon has not expired",
+     "the discount applies to the cart"
+    ]
+   ],
+   [
+    "Address in range?",
+    [
+     "the address is within the delivery zone",
+     "the customer is in range",
+     "the destination is deliverable"
+    ]
+   ],
+   [
+    "Order delivered?",
+    [
+     "the order is delivered",
+     "the driver completes the drop-off",
+     "the customer receives the food"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} online?",
+    "{} is online"
+   ],
+   [
+    "{} busy?",
+    "{} is busy"
+   ],
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ]
+  ],
+  "steps": [
+   [
+    "Browse Menu",
+    "browse the menu"
+   ],
+   [
+    "Add To Cart",
+    "add the items to the cart"
+   ],
+   [
+    "Apply Promo",
+    "apply the promo code"
+   ],
+   [
+    "Place Order",
+    "place the order"
+   ],
+   [
+    "Authorize Payment",
+    "authorize the payment"
+   ],
+   [
+    "Confirm Order",
+    "confirm the order with the restaurant"
+   ],
+   [
+    "Prepare Food",
+    "prepare the food"
+   ],
+   [
+    "Assign Driver",
+    "assign a driver"
+   ],
+   [
+    "Pick Up Order",
+    "pick up the order"
+   ],
+   [
+    "Deliver Order",
+    "deliver the order to the customer"
+   ],
+   [
+    "Send Receipt",
+    "send the receipt"
+   ],
+   [
+    "Rate Order",
+    "rate the order"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Succeeded?",
+    [
+     "it succeeds",
+     "it goes through",
+     "it completes without errors"
+    ]
+   ],
+   [
+    "Timed out?",
+    [
+     "it times out",
+     "it takes too long",
+     "no response comes back"
+    ]
+   ],
+   [
+    "Rejected?",
+    [
+     "it is rejected",
+     "it gets declined",
+     "it fails validation"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Load Balancer",
+    "load balancer"
+   ],
+   [
+    "Order Queue",
+    "order queue"
+   ],
+   [
+    "Fraud Check",
+    "fraud check"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "procurement and purchasing",
+  "things": [
+   [
+    "Requester",
+    "the requester"
+   ],
+   [
+    "Purchasing Department",
+    "the purchasing department"
+   ],
+   [
+    "Buyer",
+    "the buyer"
+   ],
+   [
+    "Supplier",
+    "the supplier"
+   ],
+   [
+    "Purchase Requisition",
+    "the purchase requisition"
+   ],
+   [
+    "Purchase Order",
+    "the purchase order"
+   ],
+   [
+    "Vendor Catalog",
+    "the vendor catalog"
+   ],
+   [
+    "Receiving Dock",
+    "the receiving dock"
+   ],
+   [
+    "Warehouse",
+    "the warehouse"
+   ],
+   [
+    "Accounts Payable",
+    "the accounts payable team"
+   ],
+   [
+    "Contract Database",
+    "the contract database"
+   ],
+   [
+    "Budget System",
+    "the budget system"
+   ],
+   [
+    "Invoice Queue",
+    "the invoice queue"
+   ]
+  ],
+  "verbs": [
+   [
+    "submits to",
+    "submits the request to"
+   ],
+   [
+    "approves for",
+    "approves the spend for"
+   ],
+   [
+    "sends to",
+    "sends the purchase order to"
+   ],
+   [
+    "requests quote from",
+    "requests a quote from"
+   ],
+   [
+    "negotiates with",
+    "negotiates pricing with"
+   ],
+   [
+    "ships to",
+    "ships the goods to"
+   ],
+   [
+    "receives from",
+    "receives the delivery from"
+   ],
+   [
+    "matches against",
+    "matches the invoice against"
+   ],
+   [
+    "escalates to",
+    "escalates the request to"
+   ],
+   [
+    "pays",
+    "releases payment to"
+   ],
+   [
+    "checks stock in",
+    "checks stock levels in"
+   ],
+   [
+    "records in",
+    "records the transaction in"
+   ]
+  ],
+  "conditions": [
+   [
+    "Budget available?",
+    [
+     "the budget has enough funds",
+     "there is money left in the budget",
+     "the cost center can cover the spend"
+    ]
+   ],
+   [
+    "Within approval limit?",
+    [
+     "the amount is within the approval limit",
+     "the manager is allowed to sign off on it"
+    ]
+   ],
+   [
+    "Preferred supplier?",
+    [
+     "the supplier is on the preferred list",
+     "there is an approved vendor for this item",
+     "a contract already exists with the supplier"
+    ]
+   ],
+   [
+    "Quote competitive?",
+    [
+     "the quote beats the other bids",
+     "the price is competitive",
+     "the supplier offers the best value"
+    ]
+   ],
+   [
+    "Goods received?",
+    [
+     "the goods have arrived",
+     "the delivery is complete",
+     "the shipment is at the dock"
+    ]
+   ],
+   [
+    "Three-way match?",
+    [
+     "the invoice matches the order and receipt",
+     "the three documents agree",
+     "the quantities and prices line up"
+    ]
+   ],
+   [
+    "Item in stock?",
+    [
+     "the item is already in stock",
+     "the warehouse has enough units",
+     "inventory can cover the need"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} approved?",
+    "{} is approved"
+   ],
+   [
+    "{} overdue?",
+    "{} is overdue"
+   ],
+   [
+    "{} complete?",
+    "{} is complete"
+   ]
+  ],
+  "steps": [
+   [
+    "Raise Requisition",
+    "raise a purchase requisition"
+   ],
+   [
+    "Check Budget",
+    "check the available budget"
+   ],
+   [
+    "Source Suppliers",
+    "source suitable suppliers"
+   ],
+   [
+    "Compare Quotes",
+    "compare the supplier quotes"
+   ],
+   [
+    "Select Vendor",
+    "select the winning vendor"
+   ],
+   [
+    "Issue Order",
+    "issue the purchase order"
+   ],
+   [
+    "Confirm Order",
+    "get the order confirmed by the supplier"
+   ],
+   [
+    "Track Shipment",
+    "track the shipment"
+   ],
+   [
+    "Inspect Delivery",
+    "inspect the delivered goods"
+   ],
+   [
+    "Log Receipt",
+    "log the goods receipt"
+   ],
+   [
+    "Verify Invoice",
+    "verify the supplier invoice"
+   ],
+   [
+    "Process Payment",
+    "process the payment"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "everything checks out",
+     "no issues are found"
+    ]
+   ],
+   [
+    "Accepted?",
+    [
+     "the supplier accepts it",
+     "it is accepted without changes"
+    ]
+   ],
+   [
+    "On time?",
+    [
+     "it finishes on time",
+     "it is done by the deadline",
+     "nothing is delayed"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Approval Gate",
+    "approval gate for high-value orders"
+   ],
+   [
+    "Catalog Portal",
+    "self-service catalog portal"
+   ],
+   [
+    "Intake Form",
+    "requisition intake form"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "machine learning training pipeline",
+  "things": [
+   [
+    "Raw Dataset",
+    "the raw dataset"
+   ],
+   [
+    "Data Loader",
+    "the data loader"
+   ],
+   [
+    "Feature Store",
+    "the feature store"
+   ],
+   [
+    "Preprocessing Job",
+    "the preprocessing job"
+   ],
+   [
+    "Training Cluster",
+    "the training cluster"
+   ],
+   [
+    "Model Checkpoint",
+    "the latest checkpoint"
+   ],
+   [
+    "Experiment Tracker",
+    "the experiment tracker"
+   ],
+   [
+    "Hyperparameter Tuner",
+    "the hyperparameter tuner"
+   ],
+   [
+    "Validation Set",
+    "the validation set"
+   ],
+   [
+    "Model Registry",
+    "the model registry"
+   ],
+   [
+    "Evaluation Harness",
+    "the evaluation harness"
+   ],
+   [
+    "Job Scheduler",
+    "the job scheduler"
+   ],
+   [
+    "Artifact Store",
+    "the artifact store"
+   ],
+   [
+    "Serving Endpoint",
+    "the serving endpoint"
+   ]
+  ],
+  "verbs": [
+   [
+    "feeds",
+    "feeds batches to"
+   ],
+   [
+    "reads from",
+    "reads data from"
+   ],
+   [
+    "writes to",
+    "writes results to"
+   ],
+   [
+    "logs to",
+    "logs metrics to"
+   ],
+   [
+    "triggers",
+    "triggers a run on"
+   ],
+   [
+    "schedules",
+    "schedules work on"
+   ],
+   [
+    "registers in",
+    "registers the model in"
+   ],
+   [
+    "deploys to",
+    "deploys the model to"
+   ],
+   [
+    "validates against",
+    "validates the output against"
+   ],
+   [
+    "uploads to",
+    "uploads the artifacts to"
+   ],
+   [
+    "pulls from",
+    "pulls features from"
+   ],
+   [
+    "notifies",
+    "sends an alert to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Loss converged?",
+    [
+     "the loss has converged",
+     "training loss has stopped improving",
+     "the loss curve is flat"
+    ]
+   ],
+   [
+    "Data valid?",
+    [
+     "the data passes validation",
+     "the schema checks out",
+     "no corrupt records are found"
+    ]
+   ],
+   [
+    "GPU available?",
+    [
+     "a gpu is free",
+     "the cluster has spare capacity",
+     "a gpu node is available"
+    ]
+   ],
+   [
+    "Overfitting detected?",
+    [
+     "the model is overfitting",
+     "validation loss is rising",
+     "the gap between train and validation widens"
+    ]
+   ],
+   [
+    "Accuracy above threshold?",
+    [
+     "accuracy meets the target",
+     "the model beats the baseline",
+     "the metric clears the threshold"
+    ]
+   ],
+   [
+    "Checkpoint saved?",
+    [
+     "the checkpoint is saved",
+     "the weights are written to disk",
+     "a checkpoint exists for this step"
+    ]
+   ],
+   [
+    "Budget remaining?",
+    [
+     "there is compute budget left",
+     "the trial budget is not used up",
+     "more tuning trials are allowed"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} healthy?",
+    "{} is healthy"
+   ],
+   [
+    "{} up to date?",
+    "{} is up to date"
+   ],
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ]
+  ],
+  "steps": [
+   [
+    "Ingest Data",
+    "ingest the raw data"
+   ],
+   [
+    "Clean Records",
+    "clean the records"
+   ],
+   [
+    "Split Dataset",
+    "split the dataset"
+   ],
+   [
+    "Extract Features",
+    "extract the features"
+   ],
+   [
+    "Tokenize Text",
+    "tokenize the text"
+   ],
+   [
+    "Initialize Weights",
+    "initialize the model weights"
+   ],
+   [
+    "Train Epoch",
+    "run a training epoch"
+   ],
+   [
+    "Save Checkpoint",
+    "save a checkpoint"
+   ],
+   [
+    "Evaluate Model",
+    "evaluate the model on held-out data"
+   ],
+   [
+    "Tune Hyperparameters",
+    "tune the hyperparameters"
+   ],
+   [
+    "Register Model",
+    "register the trained model"
+   ],
+   [
+    "Deploy Model",
+    "deploy the model to production"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Run succeeded?",
+    [
+     "the run succeeds",
+     "the job finishes cleanly",
+     "it completes without errors"
+    ]
+   ],
+   [
+    "Metrics improved?",
+    [
+     "the metrics improve",
+     "validation accuracy goes up",
+     "it beats the previous run"
+    ]
+   ],
+   [
+    "Out of memory?",
+    [
+     "it runs out of memory",
+     "the gpu memory is exhausted",
+     "the job crashes with an oom error"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Load Balancer",
+    "load balancer"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "veterinary clinic",
+  "things": [
+   [
+    "Front Desk",
+    "the front desk"
+   ],
+   [
+    "Exam Room",
+    "the exam room"
+   ],
+   [
+    "Waiting Area",
+    "the waiting area"
+   ],
+   [
+    "Pharmacy",
+    "the pharmacy"
+   ],
+   [
+    "Surgery Suite",
+    "the surgery suite"
+   ],
+   [
+    "Recovery Ward",
+    "the recovery ward"
+   ],
+   [
+    "Lab",
+    "the in-house lab"
+   ],
+   [
+    "X-Ray Room",
+    "the x-ray room"
+   ],
+   [
+    "Patient Records",
+    "the patient records system"
+   ],
+   [
+    "Veterinarian",
+    "the veterinarian"
+   ],
+   [
+    "Vet Technician",
+    "the vet technician"
+   ],
+   [
+    "Kennel",
+    "the kennel"
+   ],
+   [
+    "Billing System",
+    "the billing system"
+   ],
+   [
+    "Appointment Calendar",
+    "the appointment calendar"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the patient to"
+   ],
+   [
+    "refers to",
+    "refers the case to"
+   ],
+   [
+    "notifies",
+    "notifies"
+   ],
+   [
+    "schedules",
+    "schedules a visit with"
+   ],
+   [
+    "updates",
+    "updates the chart in"
+   ],
+   [
+    "prescribes from",
+    "prescribes medication from"
+   ],
+   [
+    "admits to",
+    "admits the animal to"
+   ],
+   [
+    "discharges from",
+    "discharges the animal from"
+   ],
+   [
+    "sends samples to",
+    "sends blood samples to"
+   ],
+   [
+    "bills through",
+    "bills the client through"
+   ],
+   [
+    "escorts to",
+    "escorts the owner to"
+   ],
+   [
+    "sends results to",
+    "sends the test results to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Pet checked in?",
+    [
+     "the pet is checked in",
+     "the owner has checked the pet in"
+    ]
+   ],
+   [
+    "Exam room free?",
+    [
+     "the exam room is free",
+     "an exam room is open",
+     "a room is available"
+    ]
+   ],
+   [
+    "Vaccines current?",
+    [
+     "the vaccines are current",
+     "the pet is up to date on shots"
+    ]
+   ],
+   [
+    "Surgery needed?",
+    [
+     "surgery is needed",
+     "the vet recommends surgery",
+     "the condition requires an operation"
+    ]
+   ],
+   [
+    "Lab results back?",
+    [
+     "the lab results are back",
+     "the results have come in",
+     "the bloodwork is finished"
+    ]
+   ],
+   [
+    "Owner consent given?",
+    [
+     "the owner gives consent",
+     "the owner signs the consent form",
+     "the owner approves the treatment"
+    ]
+   ],
+   [
+    "Pet stable?",
+    [
+     "the pet is stable",
+     "the animal is stable",
+     "the vitals are normal"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} busy?",
+    "{} is busy"
+   ],
+   [
+    "{} clean?",
+    "{} is clean"
+   ],
+   [
+    "{} full?",
+    "{} is full"
+   ]
+  ],
+  "steps": [
+   [
+    "Check In Pet",
+    "check in the pet"
+   ],
+   [
+    "Weigh Pet",
+    "weigh the pet"
+   ],
+   [
+    "Take Vitals",
+    "take the pet's temperature and heart rate"
+   ],
+   [
+    "Examine Pet",
+    "examine the pet"
+   ],
+   [
+    "Draw Blood",
+    "draw a blood sample"
+   ],
+   [
+    "Run Bloodwork",
+    "run the bloodwork"
+   ],
+   [
+    "Take X-Ray",
+    "take an x-ray"
+   ],
+   [
+    "Give Vaccine",
+    "administer the vaccine"
+   ],
+   [
+    "Administer Anesthesia",
+    "administer the anesthesia"
+   ],
+   [
+    "Fill Prescription",
+    "fill the prescription"
+   ],
+   [
+    "Update Chart",
+    "update the pet's chart"
+   ],
+   [
+    "Collect Payment",
+    "collect the payment"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Sample usable?",
+    [
+     "the sample is usable",
+     "the sample is good enough to test"
+    ]
+   ],
+   [
+    "Exam normal?",
+    [
+     "the exam looks normal",
+     "nothing abnormal is found"
+    ]
+   ],
+   [
+    "Pet calm?",
+    [
+     "the pet stays calm",
+     "the pet cooperates"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Receptionist",
+    "receptionist"
+   ],
+   [
+    "Intake Form",
+    "intake form"
+   ],
+   [
+    "Triage Nurse",
+    "triage nurse"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "airport baggage handling",
+  "things": [
+   [
+    "Check-In Counter",
+    "the check-in counter"
+   ],
+   [
+    "Tag Printer",
+    "the tag printer"
+   ],
+   [
+    "Weigh Scale",
+    "the weigh scale"
+   ],
+   [
+    "Conveyor Belt",
+    "the conveyor belt"
+   ],
+   [
+    "Sortation System",
+    "the sortation system"
+   ],
+   [
+    "X-Ray Scanner",
+    "the x-ray scanner"
+   ],
+   [
+    "Trace Detector",
+    "the explosives trace detector"
+   ],
+   [
+    "Baggage Cart",
+    "the baggage cart"
+   ],
+   [
+    "Baggage Handler",
+    "the baggage handler"
+   ],
+   [
+    "Aircraft Hold",
+    "the aircraft hold"
+   ],
+   [
+    "Arrivals Carousel",
+    "the arrivals carousel"
+   ],
+   [
+    "Oversize Desk",
+    "the oversize baggage desk"
+   ],
+   [
+    "Early Bag Store",
+    "the early bag store"
+   ],
+   [
+    "Lost Baggage Office",
+    "the lost baggage office"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the bag to"
+   ],
+   [
+    "feeds into",
+    "feeds the bag into"
+   ],
+   [
+    "loads onto",
+    "loads the bag onto"
+   ],
+   [
+    "unloads to",
+    "unloads the bags to"
+   ],
+   [
+    "routes to",
+    "routes the bag to"
+   ],
+   [
+    "diverts to",
+    "diverts the bag to"
+   ],
+   [
+    "hands to",
+    "hands the bag to"
+   ],
+   [
+    "tags for",
+    "tags the bag for"
+   ],
+   [
+    "reports to",
+    "reports the mismatch to"
+   ],
+   [
+    "stores in",
+    "stores the bag in"
+   ],
+   [
+    "transfers to",
+    "transfers the bag to"
+   ],
+   [
+    "releases to",
+    "releases the bag to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Bag screened?",
+    [
+     "the bag has been screened",
+     "the bag is cleared by screening"
+    ]
+   ],
+   [
+    "Overweight?",
+    [
+     "the bag is overweight",
+     "the bag is over the weight limit",
+     "the scale shows too much weight"
+    ]
+   ],
+   [
+    "Tag readable?",
+    [
+     "the tag can be read",
+     "the barcode scans correctly"
+    ]
+   ],
+   [
+    "Flight open?",
+    [
+     "the flight is open for loading",
+     "the flight is accepting bags",
+     "the loading window has started"
+    ]
+   ],
+   [
+    "Passenger boarded?",
+    [
+     "the passenger has boarded",
+     "the passenger is on the plane",
+     "boarding is confirmed for the passenger"
+    ]
+   ],
+   [
+    "Bag oversize?",
+    [
+     "the bag is oversize",
+     "the bag is too large for the belt",
+     "the bag exceeds the size limit"
+    ]
+   ],
+   [
+    "Tight connection?",
+    [
+     "the connection is tight",
+     "the transfer time is short",
+     "the bag must make a quick transfer"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} jammed?",
+    "{} is jammed"
+   ],
+   [
+    "{} full?",
+    "{} is full"
+   ],
+   [
+    "{} running?",
+    "{} is running"
+   ]
+  ],
+  "steps": [
+   [
+    "Check In Bag",
+    "check in the bag"
+   ],
+   [
+    "Weigh Bag",
+    "weigh the bag"
+   ],
+   [
+    "Print Tag",
+    "print the bag tag"
+   ],
+   [
+    "Attach Tag",
+    "attach the tag to the handle"
+   ],
+   [
+    "Screen Bag",
+    "screen the bag for threats"
+   ],
+   [
+    "Scan Barcode",
+    "scan the tag barcode"
+   ],
+   [
+    "Sort Bag",
+    "sort the bag by flight"
+   ],
+   [
+    "Load Container",
+    "load the bag into the container"
+   ],
+   [
+    "Match Passenger",
+    "match the bag to the passenger"
+   ],
+   [
+    "Unload Aircraft",
+    "unload the bags from the aircraft"
+   ],
+   [
+    "Deliver Bag",
+    "deliver the bag to the carousel"
+   ],
+   [
+    "Log Mishandled Bag",
+    "log the mishandled bag"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "the bag is cleared",
+     "nothing is flagged"
+    ]
+   ],
+   [
+    "Scan read?",
+    [
+     "the scan reads",
+     "the barcode is recognized"
+    ]
+   ],
+   [
+    "Within limit?",
+    [
+     "the bag is within the limit",
+     "the weight is acceptable"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Barcode Scanner",
+    "barcode scanner"
+   ],
+   [
+    "Diverter Gate",
+    "diverter gate"
+   ],
+   [
+    "Safety Curtain",
+    "safety curtain"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "nonprofit donations",
+  "things": [
+   [
+    "Donor",
+    "the donor"
+   ],
+   [
+    "Donation Form",
+    "the donation form"
+   ],
+   [
+    "Payment Gateway",
+    "the payment gateway"
+   ],
+   [
+    "Gift Database",
+    "the gift database"
+   ],
+   [
+    "Finance Team",
+    "the finance team"
+   ],
+   [
+    "Receipt Service",
+    "the receipt service"
+   ],
+   [
+    "Campaign Manager",
+    "the campaign manager"
+   ],
+   [
+    "Major Gifts Officer",
+    "the major gifts officer"
+   ],
+   [
+    "Bank Account",
+    "the bank account"
+   ],
+   [
+    "Grant Committee",
+    "the grant committee"
+   ],
+   [
+    "Volunteer Desk",
+    "the volunteer desk"
+   ],
+   [
+    "Email Platform",
+    "the email platform"
+   ],
+   [
+    "Fund Ledger",
+    "the fund ledger"
+   ],
+   [
+    "Board Treasurer",
+    "the board treasurer"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the gift details to"
+   ],
+   [
+    "submits to",
+    "submits the payment to"
+   ],
+   [
+    "records in",
+    "records the donation in"
+   ],
+   [
+    "forwards to",
+    "forwards the request to"
+   ],
+   [
+    "notifies",
+    "sends a notification to"
+   ],
+   [
+    "deposits into",
+    "deposits the funds into"
+   ],
+   [
+    "approves for",
+    "approves the gift for"
+   ],
+   [
+    "reports to",
+    "reports the totals to"
+   ],
+   [
+    "thanks via",
+    "sends a thank you through"
+   ],
+   [
+    "syncs with",
+    "syncs the records with"
+   ],
+   [
+    "flags for",
+    "flags the gift for"
+   ],
+   [
+    "allocates to",
+    "allocates the money to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Gift over limit?",
+    [
+     "the gift is over the limit",
+     "the amount is above the review threshold",
+     "the donation is larger than the usual cap"
+    ]
+   ],
+   [
+    "Payment cleared?",
+    [
+     "the payment clears",
+     "the card goes through",
+     "the bank accepts the charge"
+    ]
+   ],
+   [
+    "Donor known?",
+    [
+     "the donor is already in the database",
+     "the donor has given before",
+     "a matching donor record exists"
+    ]
+   ],
+   [
+    "Gift restricted?",
+    [
+     "the gift is restricted to a specific fund",
+     "the donor attached conditions to the gift",
+     "the money is earmarked for a program"
+    ]
+   ],
+   [
+    "Recurring gift?",
+    [
+     "the donation repeats monthly",
+     "the donor chose a recurring gift",
+     "the gift is part of a regular pledge"
+    ]
+   ],
+   [
+    "Tax receipt needed?",
+    [
+     "the donor needs a tax receipt",
+     "a receipt is required",
+     "the donor asked for a tax receipt"
+    ]
+   ],
+   [
+    "Duplicate found?",
+    [
+     "the gift is a duplicate",
+     "the same donation was already recorded",
+     "a matching entry already exists"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} approved?",
+    "{} is approved"
+   ],
+   [
+    "{} overdue?",
+    "{} is overdue"
+   ],
+   [
+    "{} verified?",
+    "{} is verified"
+   ]
+  ],
+  "steps": [
+   [
+    "Collect Gift",
+    "collect the gift"
+   ],
+   [
+    "Verify Payment",
+    "verify the payment"
+   ],
+   [
+    "Record Donation",
+    "record the donation"
+   ],
+   [
+    "Match Donor",
+    "match the donor record"
+   ],
+   [
+    "Issue Receipt",
+    "issue the receipt"
+   ],
+   [
+    "Send Thanks",
+    "send a thank you note"
+   ],
+   [
+    "Assign Fund",
+    "assign the gift to a fund"
+   ],
+   [
+    "Review Gift",
+    "review the large gift"
+   ],
+   [
+    "Process Refund",
+    "process the refund"
+   ],
+   [
+    "Reconcile Deposits",
+    "reconcile the bank deposits"
+   ],
+   [
+    "Update Pledge",
+    "update the pledge balance"
+   ],
+   [
+    "Report Totals",
+    "report the monthly totals"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Payment accepted?",
+    [
+     "it succeeds",
+     "the payment is accepted",
+     "it goes through"
+    ]
+   ],
+   [
+    "Record saved?",
+    [
+     "the record is saved",
+     "it saves correctly",
+     "the entry is stored"
+    ]
+   ],
+   [
+    "Receipt delivered?",
+    [
+     "the receipt arrives",
+     "it is delivered",
+     "the donor gets the email"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Fraud Screen",
+    "fraud screening filter"
+   ]
+  ],
+  "replicable": false
+ },
+ {
+  "name": "streaming video platform",
+  "things": [
+   [
+    "Video Player",
+    "the video player"
+   ],
+   [
+    "Content Library",
+    "the content library"
+   ],
+   [
+    "CDN Edge",
+    "the cdn edge"
+   ],
+   [
+    "Transcoder",
+    "the transcoder"
+   ],
+   [
+    "Recommendation Engine",
+    "the recommendation engine"
+   ],
+   [
+    "Playback Service",
+    "the playback service"
+   ],
+   [
+    "Subscriber Account",
+    "the subscriber account"
+   ],
+   [
+    "Billing Service",
+    "the billing service"
+   ],
+   [
+    "License Server",
+    "the license server"
+   ],
+   [
+    "Ingest Queue",
+    "the ingest queue"
+   ],
+   [
+    "Search Index",
+    "the search index"
+   ],
+   [
+    "Watchlist Service",
+    "the watchlist service"
+   ],
+   [
+    "Analytics Pipeline",
+    "the analytics pipeline"
+   ],
+   [
+    "Device Gateway",
+    "the device gateway"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the request to"
+   ],
+   [
+    "streams to",
+    "streams the video to"
+   ],
+   [
+    "fetches from",
+    "fetches the data from"
+   ],
+   [
+    "notifies",
+    "sends a notification to"
+   ],
+   [
+    "caches in",
+    "caches the segments in"
+   ],
+   [
+    "authenticates with",
+    "authenticates the user with"
+   ],
+   [
+    "queues for",
+    "queues the job for"
+   ],
+   [
+    "publishes to",
+    "publishes the title to"
+   ],
+   [
+    "validates with",
+    "validates the token with"
+   ],
+   [
+    "logs to",
+    "logs the viewing event to"
+   ],
+   [
+    "requests from",
+    "requests the manifest from"
+   ],
+   [
+    "forwards to",
+    "forwards the traffic to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Subscription active?",
+    [
+     "the subscription is active",
+     "the user has a paid plan",
+     "the account is in good standing"
+    ]
+   ],
+   [
+    "Video cached?",
+    [
+     "the video is cached at the edge",
+     "the segments are already cached",
+     "there is a cache hit"
+    ]
+   ],
+   [
+    "Stream licensed?",
+    [
+     "the stream is licensed",
+     "the license is granted",
+     "the drm check passes"
+    ]
+   ],
+   [
+    "Bandwidth sufficient?",
+    [
+     "the bandwidth is sufficient",
+     "the connection is fast enough",
+     "the network can sustain the bitrate"
+    ]
+   ],
+   [
+    "Title available?",
+    [
+     "the title is available in the region",
+     "the title is cleared for the viewer's country"
+    ]
+   ],
+   [
+    "Payment valid?",
+    [
+     "the payment is valid",
+     "the card is accepted",
+     "the charge goes through"
+    ]
+   ],
+   [
+    "Encoding complete?",
+    [
+     "the encoding is complete",
+     "all renditions are ready",
+     "the transcode has finished"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} buffering?",
+    "{} is buffering"
+   ],
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ],
+   [
+    "{} healthy?",
+    "{} is healthy"
+   ]
+  ],
+  "steps": [
+   [
+    "Upload Master",
+    "upload the master file"
+   ],
+   [
+    "Transcode Video",
+    "transcode the video into multiple bitrates"
+   ],
+   [
+    "Generate Thumbnails",
+    "generate the thumbnails"
+   ],
+   [
+    "Add Subtitles",
+    "add the subtitles and audio tracks"
+   ],
+   [
+    "Review Content",
+    "review the content for compliance"
+   ],
+   [
+    "Publish Title",
+    "publish the title to the catalog"
+   ],
+   [
+    "Authenticate Viewer",
+    "authenticate the viewer"
+   ],
+   [
+    "Check Entitlement",
+    "check the viewer's entitlement"
+   ],
+   [
+    "Select Bitrate",
+    "select the best bitrate"
+   ],
+   [
+    "Deliver Segments",
+    "deliver the video segments"
+   ],
+   [
+    "Render Recommendations",
+    "render the recommended rows"
+   ],
+   [
+    "Record Viewing",
+    "record the viewing progress"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "the check succeeds",
+     "everything looks fine"
+    ]
+   ],
+   [
+    "Completed?",
+    [
+     "it completes",
+     "the job finishes successfully"
+    ]
+   ],
+   [
+    "Approved?",
+    [
+     "it is approved",
+     "the reviewer signs off",
+     "it gets the green light"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Load Balancer",
+    "load balancer"
+   ],
+   [
+    "Web Application Firewall",
+    "web application firewall"
+   ],
+   [
+    "Rate Limiter",
+    "rate limiter"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "blood bank",
+  "things": [
+   [
+    "Donor Registration",
+    "the donor registration desk"
+   ],
+   [
+    "Screening Room",
+    "the screening room"
+   ],
+   [
+    "Donation Bay",
+    "the donation bay"
+   ],
+   [
+    "Testing Lab",
+    "the testing lab"
+   ],
+   [
+    "Component Lab",
+    "the component lab"
+   ],
+   [
+    "Blood Inventory",
+    "the blood inventory"
+   ],
+   [
+    "Cold Storage",
+    "the cold storage fridge"
+   ],
+   [
+    "Quarantine Shelf",
+    "the quarantine shelf"
+   ],
+   [
+    "Crossmatch Bench",
+    "the crossmatch bench"
+   ],
+   [
+    "Issue Desk",
+    "the issue desk"
+   ],
+   [
+    "Hospital Ward",
+    "the hospital ward"
+   ],
+   [
+    "Courier Service",
+    "the courier"
+   ],
+   [
+    "Donor Database",
+    "the donor database"
+   ],
+   [
+    "Disposal Unit",
+    "the biohazard disposal unit"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the unit to"
+   ],
+   [
+    "delivers to",
+    "delivers the blood to"
+   ],
+   [
+    "stores in",
+    "stores the bags in"
+   ],
+   [
+    "refers to",
+    "refers the donor to"
+   ],
+   [
+    "notifies",
+    "sends an alert to"
+   ],
+   [
+    "requests from",
+    "requests units from"
+   ],
+   [
+    "reports to",
+    "reports the result to"
+   ],
+   [
+    "releases to",
+    "releases the unit to"
+   ],
+   [
+    "logs in",
+    "records the donor in"
+   ],
+   [
+    "transfers to",
+    "transfers the sample to"
+   ],
+   [
+    "returns to",
+    "returns the unit to"
+   ],
+   [
+    "discards in",
+    "discards the bag in"
+   ]
+  ],
+  "conditions": [
+   [
+    "Donor eligible?",
+    [
+     "the donor is eligible",
+     "the donor passes screening",
+     "the donor is cleared to give"
+    ]
+   ],
+   [
+    "Hemoglobin low?",
+    [
+     "the hemoglobin is too low",
+     "the donor is below the iron threshold"
+    ]
+   ],
+   [
+    "Tests clear?",
+    [
+     "the tests come back clear",
+     "no infection markers are found",
+     "the screening results are negative"
+    ]
+   ],
+   [
+    "Unit expired?",
+    [
+     "the unit has expired",
+     "the unit is past its date"
+    ]
+   ],
+   [
+    "Blood type matches?",
+    [
+     "the blood type matches",
+     "the patient and unit types agree"
+    ]
+   ],
+   [
+    "Stock low?",
+    [
+     "the stock is running low",
+     "supply is below the minimum level",
+     "the shelves are nearly empty"
+    ]
+   ],
+   [
+    "Crossmatch compatible?",
+    [
+     "the crossmatch is compatible",
+     "the sample shows no reaction"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} full?",
+    "{} is full"
+   ],
+   [
+    "{} too warm?",
+    "{} is too warm"
+   ],
+   [
+    "{} out of stock?",
+    "{} is out of stock"
+   ]
+  ],
+  "steps": [
+   [
+    "Verify Identity",
+    "check the donor's id"
+   ],
+   [
+    "Take History",
+    "review the donor questionnaire"
+   ],
+   [
+    "Check Vitals",
+    "measure pulse and blood pressure"
+   ],
+   [
+    "Test Hemoglobin",
+    "run a finger-prick hemoglobin test"
+   ],
+   [
+    "Draw Blood",
+    "collect a unit of whole blood"
+   ],
+   [
+    "Label Bag",
+    "attach the barcode label to the bag"
+   ],
+   [
+    "Test Samples",
+    "screen the samples for infections"
+   ],
+   [
+    "Type Blood",
+    "determine the abo and rh type"
+   ],
+   [
+    "Separate Components",
+    "spin the bag into red cells and plasma"
+   ],
+   [
+    "Store Unit",
+    "place the unit in the fridge"
+   ],
+   [
+    "Match Unit",
+    "crossmatch the unit with the patient sample"
+   ],
+   [
+    "Issue Blood",
+    "hand the unit over for transfusion"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "the check is clear",
+     "everything looks fine"
+    ]
+   ],
+   [
+    "Sample usable?",
+    [
+     "the sample is usable",
+     "there is enough sample",
+     "the tube is not hemolyzed"
+    ]
+   ],
+   [
+    "Donor tolerates?",
+    [
+     "the donor feels fine",
+     "there is no adverse reaction"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Triage Nurse",
+    "screening nurse"
+   ],
+   [
+    "Barcode Scanner",
+    "barcode scanner"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "elections and vote counting",
+  "things": [
+   [
+    "Polling Station",
+    "the polling station"
+   ],
+   [
+    "Ballot Box",
+    "the ballot box"
+   ],
+   [
+    "Voter Registry",
+    "the voter registry"
+   ],
+   [
+    "Election Official",
+    "the election official"
+   ],
+   [
+    "Ballot Paper",
+    "the ballot paper"
+   ],
+   [
+    "Counting Center",
+    "the counting center"
+   ],
+   [
+    "Scanner",
+    "the ballot scanner"
+   ],
+   [
+    "Returning Officer",
+    "the returning officer"
+   ],
+   [
+    "Observer",
+    "the party observer"
+   ],
+   [
+    "Results Server",
+    "the results server"
+   ],
+   [
+    "Provisional Ballots",
+    "the provisional ballots"
+   ],
+   [
+    "Mail Ballots",
+    "the mail ballots"
+   ],
+   [
+    "Election Commission",
+    "the election commission"
+   ],
+   [
+    "Tally Sheet",
+    "the tally sheet"
+   ]
+  ],
+  "verbs": [
+   [
+    "issues to",
+    "issues the ballot paper to"
+   ],
+   [
+    "checks against",
+    "checks the voter against"
+   ],
+   [
+    "seals in",
+    "seals the ballots in"
+   ],
+   [
+    "transports to",
+    "transports the ballot box to"
+   ],
+   [
+    "scans into",
+    "scans the ballots into"
+   ],
+   [
+    "records on",
+    "records the count on"
+   ],
+   [
+    "reports to",
+    "reports the results to"
+   ],
+   [
+    "audits with",
+    "audits the totals with"
+   ],
+   [
+    "flags for",
+    "flags the ballot for"
+   ],
+   [
+    "verifies with",
+    "verifies the signature with"
+   ],
+   [
+    "publishes to",
+    "publishes the results to"
+   ],
+   [
+    "delivers to",
+    "delivers the sealed bags to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Voter registered?",
+    [
+     "the voter is on the roll",
+     "the voter is registered",
+     "the name is found in the registry"
+    ]
+   ],
+   [
+    "ID valid?",
+    [
+     "the identification is valid",
+     "the voter shows acceptable ID"
+    ]
+   ],
+   [
+    "Ballot valid?",
+    [
+     "the ballot is correctly marked",
+     "the ballot is valid",
+     "the mark is clear"
+    ]
+   ],
+   [
+    "Seal intact?",
+    [
+     "the seal is intact",
+     "the seal has not been broken"
+    ]
+   ],
+   [
+    "Counts match?",
+    [
+     "the counts match",
+     "the totals agree",
+     "the tally matches the scanner total"
+    ]
+   ],
+   [
+    "Margin within recount?",
+    [
+     "the margin is within the recount threshold",
+     "the race is close enough for a recount"
+    ]
+   ],
+   [
+    "Signature matches?",
+    [
+     "the signature matches the record",
+     "the signature is verified"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} sealed?",
+    "{} is sealed"
+   ],
+   [
+    "{} counted?",
+    "{} is counted"
+   ],
+   [
+    "{} certified?",
+    "{} is certified"
+   ]
+  ],
+  "steps": [
+   [
+    "Check In Voter",
+    "check in the voter"
+   ],
+   [
+    "Verify Identity",
+    "verify the voter's identity"
+   ],
+   [
+    "Issue Ballot",
+    "issue a ballot paper"
+   ],
+   [
+    "Mark Ballot",
+    "mark the ballot"
+   ],
+   [
+    "Cast Ballot",
+    "cast the ballot in the box"
+   ],
+   [
+    "Close Polls",
+    "close the polls"
+   ],
+   [
+    "Seal Box",
+    "seal the ballot box"
+   ],
+   [
+    "Transport Ballots",
+    "transport the ballots to the counting center"
+   ],
+   [
+    "Scan Ballots",
+    "scan the ballots"
+   ],
+   [
+    "Tally Votes",
+    "tally the votes"
+   ],
+   [
+    "Audit Results",
+    "audit the results"
+   ],
+   [
+    "Certify Results",
+    "certify the election results"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Passed?",
+    [
+     "it passes",
+     "the check succeeds",
+     "everything checks out"
+    ]
+   ],
+   [
+    "Accepted?",
+    [
+     "the ballot is accepted",
+     "the scanner accepts it"
+    ]
+   ],
+   [
+    "Complete?",
+    [
+     "the step is complete",
+     "it finishes without issues"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Check-In Desk",
+    "check-in desk"
+   ],
+   [
+    "Security Guard",
+    "security guard"
+   ],
+   [
+    "Voting Booth",
+    "privacy booth"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "tax filing",
+  "things": [
+   [
+    "Taxpayer",
+    "the taxpayer"
+   ],
+   [
+    "Tax Preparer",
+    "the tax preparer"
+   ],
+   [
+    "Intake Portal",
+    "the intake portal"
+   ],
+   [
+    "Document Vault",
+    "the document vault"
+   ],
+   [
+    "W-2 Form",
+    "the W-2 form"
+   ],
+   [
+    "Income Worksheet",
+    "the income worksheet"
+   ],
+   [
+    "Deduction Engine",
+    "the deduction engine"
+   ],
+   [
+    "Review Queue",
+    "the review queue"
+   ],
+   [
+    "Tax Software",
+    "the tax software"
+   ],
+   [
+    "E-File Gateway",
+    "the e-file gateway"
+   ],
+   [
+    "IRS Server",
+    "the IRS server"
+   ],
+   [
+    "Refund Tracker",
+    "the refund tracker"
+   ],
+   [
+    "State Tax Agency",
+    "the state tax agency"
+   ],
+   [
+    "Payment Processor",
+    "the payment processor"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the documents to"
+   ],
+   [
+    "uploads to",
+    "uploads the forms to"
+   ],
+   [
+    "submits to",
+    "submits the return to"
+   ],
+   [
+    "forwards to",
+    "forwards the return to"
+   ],
+   [
+    "reports to",
+    "reports the income to"
+   ],
+   [
+    "requests from",
+    "requests the missing records from"
+   ],
+   [
+    "notifies",
+    "notifies"
+   ],
+   [
+    "flags for",
+    "flags the return for"
+   ],
+   [
+    "calculates for",
+    "calculates the totals for"
+   ],
+   [
+    "transmits to",
+    "transmits the filing to"
+   ],
+   [
+    "assigns to",
+    "assigns the return to"
+   ],
+   [
+    "refunds via",
+    "sends the refund through"
+   ]
+  ],
+  "conditions": [
+   [
+    "Income verified?",
+    [
+     "the income is verified",
+     "the income matches the records",
+     "the reported wages check out"
+    ]
+   ],
+   [
+    "Documents complete?",
+    [
+     "all documents are in",
+     "nothing is missing from the file"
+    ]
+   ],
+   [
+    "Itemizing deductions?",
+    [
+     "the itemized total beats the standard deduction",
+     "itemizing saves more money",
+     "the taxpayer chooses to itemize"
+    ]
+   ],
+   [
+    "Balance due?",
+    [
+     "the taxpayer owes money",
+     "a balance is due",
+     "the return shows a payment owed"
+    ]
+   ],
+   [
+    "Return accepted?",
+    [
+     "the IRS accepts the return",
+     "the e-file is accepted",
+     "the filing clears validation"
+    ]
+   ],
+   [
+    "Audit flagged?",
+    [
+     "the return is flagged for audit",
+     "the system raises an audit flag"
+    ]
+   ],
+   [
+    "Extension needed?",
+    [
+     "the taxpayer needs more time",
+     "an extension is required",
+     "the deadline cannot be met"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} signed?",
+    "{} is signed"
+   ],
+   [
+    "{} rejected?",
+    "{} is rejected"
+   ],
+   [
+    "{} amended?",
+    "{} has been amended"
+   ]
+  ],
+  "steps": [
+   [
+    "Collect Documents",
+    "collect the tax documents"
+   ],
+   [
+    "Verify Identity",
+    "verify the taxpayer's identity"
+   ],
+   [
+    "Enter Income",
+    "enter the income figures"
+   ],
+   [
+    "Apply Deductions",
+    "apply the deductions and credits"
+   ],
+   [
+    "Calculate Tax",
+    "calculate the tax owed"
+   ],
+   [
+    "Review Return",
+    "review the return for errors"
+   ],
+   [
+    "Sign Return",
+    "get the return signed"
+   ],
+   [
+    "Submit E-File",
+    "submit the return electronically"
+   ],
+   [
+    "Pay Balance",
+    "pay the balance due"
+   ],
+   [
+    "Track Refund",
+    "track the refund status"
+   ],
+   [
+    "File Extension",
+    "file for an extension"
+   ],
+   [
+    "Archive Records",
+    "archive the records"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Errors found?",
+    [
+     "the review finds errors",
+     "something does not add up",
+     "a mistake turns up"
+    ]
+   ],
+   [
+    "Submission successful?",
+    [
+     "the submission goes through",
+     "the transmission succeeds"
+    ]
+   ],
+   [
+    "Payment cleared?",
+    [
+     "the payment clears",
+     "the funds are received"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Identity Checker",
+    "identity verification screen"
+   ]
+  ],
+  "replicable": false
+ },
+ {
+  "name": "travel booking site",
+  "things": [
+   [
+    "Search Page",
+    "the search page"
+   ],
+   [
+    "Flight Catalog",
+    "the flight catalog"
+   ],
+   [
+    "Hotel Inventory",
+    "the hotel inventory"
+   ],
+   [
+    "Booking Engine",
+    "the booking engine"
+   ],
+   [
+    "Payment Gateway",
+    "the payment gateway"
+   ],
+   [
+    "Customer Account",
+    "the customer account"
+   ],
+   [
+    "Shopping Cart",
+    "the shopping cart"
+   ],
+   [
+    "Fare Cache",
+    "the fare cache"
+   ],
+   [
+    "Airline Partner",
+    "the airline partner"
+   ],
+   [
+    "Confirmation Mailer",
+    "the confirmation mailer"
+   ],
+   [
+    "Loyalty Service",
+    "the loyalty service"
+   ],
+   [
+    "Fraud Checker",
+    "the fraud checker"
+   ],
+   [
+    "Support Desk",
+    "the support desk"
+   ],
+   [
+    "Itinerary Store",
+    "the itinerary store"
+   ]
+  ],
+  "verbs": [
+   [
+    "sends to",
+    "sends the request to"
+   ],
+   [
+    "queries",
+    "queries"
+   ],
+   [
+    "reserves in",
+    "reserves a seat in"
+   ],
+   [
+    "charges via",
+    "charges the card through"
+   ],
+   [
+    "notifies",
+    "notifies"
+   ],
+   [
+    "saves to",
+    "saves the booking to"
+   ],
+   [
+    "reads from",
+    "reads prices from"
+   ],
+   [
+    "forwards to",
+    "forwards the traveler details to"
+   ],
+   [
+    "validates with",
+    "validates the order with"
+   ],
+   [
+    "refreshes",
+    "refreshes"
+   ],
+   [
+    "escalates to",
+    "escalates the case to"
+   ],
+   [
+    "credits",
+    "credits points to"
+   ]
+  ],
+  "conditions": [
+   [
+    "Seat available?",
+    [
+     "the seat is available",
+     "seats are still open",
+     "the fare has inventory"
+    ]
+   ],
+   [
+    "Payment approved?",
+    [
+     "the payment is approved",
+     "the card goes through",
+     "the bank accepts the charge"
+    ]
+   ],
+   [
+    "User logged in?",
+    [
+     "the user is logged in",
+     "the traveler has an active session"
+    ]
+   ],
+   [
+    "Fare changed?",
+    [
+     "the fare has changed",
+     "the price has moved since the search",
+     "the airline updated the fare"
+    ]
+   ],
+   [
+    "Fraud suspected?",
+    [
+     "the order looks fraudulent",
+     "the fraud score is too high",
+     "the booking is flagged as risky"
+    ]
+   ],
+   [
+    "Refundable ticket?",
+    [
+     "the ticket is refundable",
+     "the fare rules allow a refund"
+    ]
+   ],
+   [
+    "Member account?",
+    [
+     "the traveler is a loyalty member",
+     "the account has a membership tier",
+     "the customer is enrolled in rewards"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ],
+   [
+    "{} out of date?",
+    "{} is out of date"
+   ],
+   [
+    "{} unavailable?",
+    "{} is unavailable"
+   ]
+  ],
+  "steps": [
+   [
+    "Search Flights",
+    "search for flights"
+   ],
+   [
+    "Filter Results",
+    "filter the results by price"
+   ],
+   [
+    "Select Fare",
+    "select a fare"
+   ],
+   [
+    "Enter Traveler Details",
+    "enter the traveler details"
+   ],
+   [
+    "Hold Seat",
+    "hold the seat"
+   ],
+   [
+    "Apply Promo Code",
+    "apply the promo code"
+   ],
+   [
+    "Process Payment",
+    "process the payment"
+   ],
+   [
+    "Issue Ticket",
+    "issue the ticket"
+   ],
+   [
+    "Send Confirmation",
+    "send the confirmation email"
+   ],
+   [
+    "Add Baggage",
+    "add extra baggage"
+   ],
+   [
+    "Check In",
+    "check in the passenger"
+   ],
+   [
+    "Cancel Booking",
+    "cancel the booking"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Succeeded?",
+    [
+     "it succeeds",
+     "it goes through",
+     "it completes without errors"
+    ]
+   ],
+   [
+    "Timed out?",
+    [
+     "it times out",
+     "the partner takes too long to respond"
+    ]
+   ],
+   [
+    "Valid input?",
+    [
+     "the input is valid",
+     "the details pass validation"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Load Balancer",
+    "load balancer"
+   ],
+   [
+    "Rate Limiter",
+    "rate limiter"
+   ],
+   [
+    "Search Cache",
+    "search cache"
+   ]
+  ],
+  "replicable": true
+ },
+ {
+  "name": "search engine indexing",
+  "things": [
+   [
+    "Web Crawler",
+    "the web crawler"
+   ],
+   [
+    "URL Frontier",
+    "the url frontier"
+   ],
+   [
+    "Fetcher",
+    "the fetcher"
+   ],
+   [
+    "Parser",
+    "the parser"
+   ],
+   [
+    "Link Extractor",
+    "the link extractor"
+   ],
+   [
+    "Duplicate Detector",
+    "the duplicate detector"
+   ],
+   [
+    "Inverted Index",
+    "the inverted index"
+   ],
+   [
+    "Index Shard",
+    "the index shard"
+   ],
+   [
+    "Document Store",
+    "the document store"
+   ],
+   [
+    "Robots Cache",
+    "the robots cache"
+   ],
+   [
+    "Ranking Service",
+    "the ranking service"
+   ],
+   [
+    "Query Router",
+    "the query router"
+   ],
+   [
+    "Scheduler",
+    "the scheduler"
+   ],
+   [
+    "Sitemap Reader",
+    "the sitemap reader"
+   ]
+  ],
+  "verbs": [
+   [
+    "pulls from",
+    "pulls the next url from"
+   ],
+   [
+    "fetches from",
+    "fetches the page from"
+   ],
+   [
+    "sends to",
+    "sends the content to"
+   ],
+   [
+    "writes to",
+    "writes the entries to"
+   ],
+   [
+    "reads from",
+    "reads the postings from"
+   ],
+   [
+    "queues in",
+    "queues the new links in"
+   ],
+   [
+    "checks against",
+    "checks the url against"
+   ],
+   [
+    "parses with",
+    "hands the page to"
+   ],
+   [
+    "merges into",
+    "merges the segment into"
+   ],
+   [
+    "notifies",
+    "notifies"
+   ],
+   [
+    "routes to",
+    "routes the query to"
+   ],
+   [
+    "updates",
+    "updates"
+   ]
+  ],
+  "conditions": [
+   [
+    "Allowed by robots?",
+    [
+     "the url is allowed by robots rules",
+     "robots.txt permits the crawl",
+     "the page is not blocked by robots"
+    ]
+   ],
+   [
+    "Already seen?",
+    [
+     "the url has been seen before",
+     "the url is already in the frontier"
+    ]
+   ],
+   [
+    "Duplicate content?",
+    [
+     "the content is a duplicate",
+     "the page matches an existing fingerprint",
+     "a near-identical copy is already indexed"
+    ]
+   ],
+   [
+    "Page changed?",
+    [
+     "the page has changed since the last crawl",
+     "the content hash differs from the stored one"
+    ]
+   ],
+   [
+    "Canonical page?",
+    [
+     "the page is the canonical version",
+     "the canonical tag points to itself"
+    ]
+   ],
+   [
+    "Indexable?",
+    [
+     "the page is indexable",
+     "there is no noindex directive on the page"
+    ]
+   ],
+   [
+    "Shard full?",
+    [
+     "the shard is full",
+     "the shard has reached its size limit",
+     "the segment cannot take more documents"
+    ]
+   ]
+  ],
+  "thing_conditions": [
+   [
+    "{} overloaded?",
+    "{} is overloaded"
+   ],
+   [
+    "{} stale?",
+    "{} is stale"
+   ],
+   [
+    "{} reachable?",
+    "{} is reachable"
+   ]
+  ],
+  "steps": [
+   [
+    "Fetch Page",
+    "fetch the page"
+   ],
+   [
+    "Check Robots",
+    "check the robots rules"
+   ],
+   [
+    "Parse HTML",
+    "parse the html"
+   ],
+   [
+    "Extract Links",
+    "extract the links"
+   ],
+   [
+    "Normalize URL",
+    "normalize the url"
+   ],
+   [
+    "Fingerprint Content",
+    "fingerprint the content"
+   ],
+   [
+    "Tokenize Text",
+    "tokenize the text"
+   ],
+   [
+    "Stem Terms",
+    "stem the terms"
+   ],
+   [
+    "Build Postings",
+    "build the postings list"
+   ],
+   [
+    "Merge Segments",
+    "merge the index segments"
+   ],
+   [
+    "Compute Rank",
+    "compute the page rank"
+   ],
+   [
+    "Commit Index",
+    "commit the index"
+   ]
+  ],
+  "step_outcomes": [
+   [
+    "Fetch succeeded?",
+    [
+     "the fetch succeeds",
+     "the server responds with a 200",
+     "the page downloads fine"
+    ]
+   ],
+   [
+    "Parse OK?",
+    [
+     "the page parses cleanly",
+     "the html is well formed"
+    ]
+   ],
+   [
+    "Commit successful?",
+    [
+     "the commit goes through",
+     "the index is written successfully",
+     "the segment is committed"
+    ]
+   ]
+  ],
+  "front_components": [
+   [
+    "Load Balancer",
+    "load balancer"
+   ],
+   [
+    "Request Queue",
+    "request queue"
+   ],
+   [
+    "Rate Limiter",
+    "rate limiter"
+   ]
+  ],
+  "replicable": true
+ }
+]
