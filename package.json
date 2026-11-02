@@ -4,7 +4,7 @@
   "description": "Shared engine that turns plain-English text into valid Mermaid flowcharts, used by the termaid Mac app",
   "type": "module",
   "scripts": {
-    "test": "node --test test/",
+    "test": "node --test 'test/**/*.test.ts'",
     "build:engine": "esbuild src/embeddedEngine.ts --bundle --format=iife --global-name=termaidEngine --target=es2022 --outfile=mac/Sources/TermaidCore/Resources/engine.js"
   },
   "engines": {
