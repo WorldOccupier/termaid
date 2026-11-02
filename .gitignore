@@ -11,3 +11,6 @@ training/eval-*.txt
 training/probe-*.jsonl
 __pycache__/
 .DS_Store
+
+# Built by `npm run build:engine`
+mac/Sources/TermaidCore/Resources/engine.js

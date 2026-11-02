@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    # Xcode 26 is required by the Swift package.
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build:engine
+      - uses: actions/cache@v4
+        with:
+          path: mac/.build
+          key: swiftpm-${{ runner.os }}-${{ hashFiles('mac/Package.resolved', 'mac/Package.swift') }}
+      - run: swift test
+        working-directory: mac
