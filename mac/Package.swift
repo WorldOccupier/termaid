@@ -27,6 +27,7 @@ let package = Package(
         // The menu-bar app: the capsule, voice and typed input, the Library.
         .executableTarget(name: "TermaidApp", dependencies: ["TermaidCore"]),
         .testTarget(name: "TermaidCoreTests", dependencies: ["TermaidCore"]),
+        .testTarget(name: "TermaidAppTests", dependencies: ["TermaidApp"]),
     ],
     // JavaScriptCore and llama.cpp handles aren't Sendable; each wrapper serialises access itself.
     swiftLanguageModes: [.v5]
