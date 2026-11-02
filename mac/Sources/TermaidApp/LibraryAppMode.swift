@@ -4,10 +4,12 @@ import AppKit
 /// When the Library closes, it goes back to being a menu-bar-only accessory.
 @MainActor final class LibraryAppMode: NSObject, NSWindowDelegate {
     private let app: NSApplication
-    private lazy var mainMenu = Self.makeMainMenu()
+    private let newDiagram: @MainActor () -> Void
+    private lazy var mainMenu = makeMainMenu()
 
-    init(app: NSApplication) {
+    init(app: NSApplication, newDiagram: @escaping @MainActor () -> Void) {
         self.app = app
+        self.newDiagram = newDiagram
     }
 
     func enter() {
@@ -20,21 +22,27 @@ import AppKit
         app.setActivationPolicy(.accessory)
     }
 
-    private static func makeMainMenu() -> NSMenu {
+    @objc private func startNewDiagram() { newDiagram() }
+
+    private func makeMainMenu() -> NSMenu {
         let menu = NSMenu()
-        menu.addItem(submenu("Termaid", [
+        menu.addItem(Self.submenu("Termaid", [
             NSMenuItem(title: "Hide Termaid", action: #selector(NSApplication.hide(_:)), keyEquivalent: "h"),
             .separator(),
             NSMenuItem(title: "Quit Termaid", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"),
         ]))
-        menu.addItem(submenu("File", [
+        let newItem = NSMenuItem(title: "New Diagram", action: #selector(startNewDiagram), keyEquivalent: "n")
+        newItem.target = self
+        menu.addItem(Self.submenu("File", [
+            newItem,
+            .separator(),
             NSMenuItem(title: "Close", action: #selector(NSWindow.performClose(_:)), keyEquivalent: "w"),
         ]))
-        menu.addItem(submenu("Edit", [
+        menu.addItem(Self.submenu("Edit", [
             NSMenuItem(title: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c"),
             NSMenuItem(title: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a"),
         ]))
-        let window = submenu("Window", [
+        let window = Self.submenu("Window", [
             NSMenuItem(title: "Minimize", action: #selector(NSWindow.performMiniaturize(_:)), keyEquivalent: "m"),
             NSMenuItem(title: "Zoom", action: #selector(NSWindow.performZoom(_:)), keyEquivalent: ""),
         ])

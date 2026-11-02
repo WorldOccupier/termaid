@@ -1,8 +1,8 @@
 import Foundation
 import TermaidCore
 
-/// A diagram after an edit: the Mermaid to store and the SVG to show.
-struct EditedDiagram: Equatable {
+/// A drawn diagram: the Mermaid to store and the SVG to show.
+struct RenderedDiagram: Equatable {
     let mermaid: String
     let svg: String
 }
@@ -11,19 +11,19 @@ struct EditedDiagram: Equatable {
 @MainActor protocol DiagramEditing {
     /// `onStep` gets the SVG after each sentence of the instruction, on the main actor.
     func edit(_ mermaid: String, instruction: String,
-              onStep: @escaping @MainActor (String) -> Void) async throws -> EditedDiagram
+              onStep: @escaping @MainActor (String) -> Void) async throws -> RenderedDiagram
 }
 
 @MainActor struct EngineDiagramEditor: DiagramEditing {
     let models: ModelStore
 
     func edit(_ mermaid: String, instruction: String,
-              onStep: @escaping @MainActor (String) -> Void) async throws -> EditedDiagram {
+              onStep: @escaping @MainActor (String) -> Void) async throws -> RenderedDiagram {
         let engine = try await models.engine()
         let edited = try await engine.editStreaming(mermaid, instruction: instruction) { _, svg in
             Task { @MainActor in onStep(svg) }
         }
         let svg = try await Task.detached { try engine.toSvg(edited) }.value
-        return EditedDiagram(mermaid: edited, svg: svg)
+        return RenderedDiagram(mermaid: edited, svg: svg)
     }
 }

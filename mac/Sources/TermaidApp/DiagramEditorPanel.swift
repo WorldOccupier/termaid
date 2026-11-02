@@ -15,13 +15,13 @@ struct DiagramEditorPanel: View {
             titleField
             label("Changes")
             changeList
-            EditInstructionField(session: session)
-            status
+            InstructionField(session: session)
+            InstructionStatusLine(session: session)
             buttons
         }
         .padding(18)
         .overlayPreferenceValue(FlightAnchorKey.self, flight)
-        .onChange(of: session.pendingChange) { _, pending in if pending == nil { landedChange = nil } }
+        .onChange(of: session.pendingInstruction) { _, pending in if pending == nil { landedChange = nil } }
         .background(RoundedRectangle(cornerRadius: 14).fill(Color.white.opacity(0.03)))
         .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(Obsidian.border.opacity(0.6)))
         .padding(.trailing, 16)
@@ -42,14 +42,14 @@ struct DiagramEditorPanel: View {
     private var changeList: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 8) {
-                if session.appliedChanges.isEmpty && session.pendingChange == nil {
+                if session.appliedChanges.isEmpty && session.pendingInstruction == nil {
                     Text("Say or type what to change. Each change redraws the diagram, and Undo steps back.")
                         .foregroundStyle(Obsidian.muted)
                 }
                 ForEach(Array(session.appliedChanges.enumerated()), id: \.offset) { index, change in
                     appliedRow(change, isNewest: index == session.appliedChanges.count - 1)
                 }
-                if let pending = session.pendingChange {
+                if let pending = session.pendingInstruction {
                     PendingChangeRow(text: pending, landed: landedChange == pending)
                 }
             }
@@ -70,35 +70,11 @@ struct DiagramEditorPanel: View {
 
     @ViewBuilder private func flight(_ anchors: [String: Anchor<CGRect>]) -> some View {
         GeometryReader { proxy in
-            if let change = session.pendingChange, landedChange != change,
+            if let change = session.pendingInstruction, landedChange != change,
                let source = anchors[FlightAnchor.source], let target = anchors[FlightAnchor.target] {
                 ChangeFlight(text: change, from: proxy[source], to: proxy[target]) { landedChange = change }
                     .id(change)
             }
-        }
-    }
-
-    /// One short line, so a long error never pushes the buttons around.
-    @ViewBuilder private var status: some View {
-        if let error = session.errorMessage {
-            Label(error, systemImage: "exclamationmark.triangle.fill")
-                .foregroundStyle(Obsidian.rose)
-                .lineLimit(2)
-                .help(error)
-                .font(Obsidian.font(11.5))
-        } else if let working = workingText {
-            Label(working, systemImage: "arrow.triangle.2.circlepath")
-                .foregroundStyle(Obsidian.muted)
-                .font(Obsidian.font(11.5))
-        }
-    }
-
-    private var workingText: String? {
-        switch session.activity {
-        case .idle: return nil
-        case .listening: return "Listening…"
-        case .transcribing: return "Transcribing…"
-        case .applying: return "Redrawing…"
         }
     }
 

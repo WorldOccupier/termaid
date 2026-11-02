@@ -17,9 +17,9 @@ struct CapsuleRootView: View {
 
     var body: some View {
         let size = model.shapeSize
-        let radius: CGFloat = isCard ? 30 : size.height / 2
+        let radius: CGFloat = isCard ? DiagramDrawingCard.cornerRadius : size.height / 2
         let curve: Animation = isCard
-            ? .timingCurve(0.3, 1.12, 0.45, 1, duration: 0.76)
+            ? DiagramDrawingCard.growCurve
             : .timingCurve(0.32, 1.25, 0.5, 1, duration: 0.62)
 
         ZStack(alignment: .top) {
@@ -63,7 +63,7 @@ struct CapsuleRootView: View {
         HStack(spacing: 12) {
             MicBadge(symbol: "mic.fill", color: .recordRed)
             // The newest words matter most, so long transcripts are cut at the start.
-            Text(model.liveTranscript.isEmpty ? "Listening…" : model.liveTranscript)
+            Text(model.liveTranscript.isEmpty ? StatusLabel.listening : model.liveTranscript)
                 .font(.system(size: 15, weight: .medium))
                 .foregroundStyle(model.liveTranscript.isEmpty ? Color(white: 0.75) : .white)
                 .lineLimit(1)
@@ -123,80 +123,10 @@ struct CapsuleRootView: View {
     }
 
     private var card: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 8) {
-                Image(systemName: "point.3.connected.trianglepath.dotted")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .frame(width: 22, height: 22)
-                    .background(RoundedRectangle(cornerRadius: 7).fill(Color.white.opacity(0.1)))
-                Text(model.title)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .lineLimit(1)
-                Spacer(minLength: 0)
-                savedChip
-            }
-            .frame(height: 24)
-            .padding(.horizontal, 2)
-
-            transcript
-            canvas
-        }
-        .padding(.top, 14)
-        .padding(.bottom, 16)
-        .padding(.horizontal, 16)
-        .contentShape(Rectangle())
-        .onTapGesture { model.openCard() }
-    }
-
-    private var savedChip: some View {
-        let saved = model.phase == .saved
-        return HStack(spacing: 5) {
-            Image(systemName: "checkmark")
-                .font(.system(size: 12, weight: .bold))
-            Text("Saved to Library")
-        }
-        .font(.system(size: 12, weight: .semibold))
-        .foregroundStyle(Color.okGreen)
-        .padding(.horizontal, 10)
-        .frame(height: 24)
-        .background(Capsule().fill(Color.okGreen.opacity(0.14)))
-        .opacity(saved ? 1 : 0)
-        .offset(y: saved ? 0 : 4)
-        .animation(.easeOut(duration: 0.3), value: saved)
-    }
-
-    /// Each sentence is gray; the one being drawn turns white.
-    private var transcript: some View {
-        var line = Text("")
-        for (index, sentence) in model.sentences.enumerated() {
-            if index > 0 { line = line + Text(" ") }
-            let current = index == model.currentStep
-            line = line + Text(sentence).foregroundColor(current ? .white : Color(white: 0.56))
-        }
-        return line
-            .font(.system(size: 13))
-            .lineSpacing(2)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 2)
-            .animation(.easeOut(duration: 0.35), value: model.currentStep)
-    }
-
-    private var canvas: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(Color(red: 5 / 255, green: 5 / 255, blue: 6 / 255))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(Color.white.opacity(0.07), lineWidth: 1)
-                )
-            RevealDiagram(image: model.svgImage)
-                .id(model.svgRevision)
-                .padding(16)
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .frame(maxHeight: .infinity)
+        DiagramDrawingCard(title: model.title, sentences: model.sentences, currentStep: model.currentStep,
+                           image: model.svgImage, revision: model.svgRevision, saved: model.phase == .saved)
+            .contentShape(Rectangle())
+            .onTapGesture { model.openCard() }
     }
 }
 
@@ -209,30 +139,6 @@ private extension View {
             .blur(radius: on ? 0 : 6)
             .animation(.easeOut(duration: 0.3).delay(on ? 0.16 : 0), value: on)
             .allowsHitTesting(on)
-    }
-}
-
-/// Shows the diagram and sweeps it in from left to right. Recreated per step via `.id`.
-private struct RevealDiagram: View {
-    let image: NSImage?
-    @State private var progress: CGFloat = 0
-
-    var body: some View {
-        Group {
-            if let image {
-                Image(nsImage: image)
-                    .resizable()
-                    .scaledToFit()
-            }
-        }
-        .mask(alignment: .leading) {
-            GeometryReader { geo in
-                Rectangle().frame(width: geo.size.width * progress, height: geo.size.height)
-            }
-        }
-        .onAppear {
-            withAnimation(.timingCurve(0.4, 0, 0.2, 1, duration: 0.9)) { progress = 1 }
-        }
     }
 }
 

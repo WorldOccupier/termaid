@@ -2,17 +2,19 @@ import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
 
-/// Shared UI state for the Library window: which item to highlight next.
+/// Shared UI state for the Library window: which item to highlight next, and whether to start a new diagram.
 @MainActor final class LibraryHighlight: ObservableObject {
     @Published var highlightedID: UUID?
     @Published var openID: UUID?
+    /// Set to open the new-diagram composer; the Library clears it once the composer is up.
+    @Published var newDiagramRequested = false
 }
 
 /// One dark Library window, created on first use and reused afterwards.
 @MainActor enum LibraryWindow {
     private static var window: NSWindow?
     private static let highlight = LibraryHighlight()
-    private static let appMode = LibraryAppMode(app: NSApp)
+    private static let appMode = LibraryAppMode(app: NSApp, newDiagram: showNewDiagram)
 
     static func show(highlighting id: UUID?, opening openID: UUID? = nil) {
         highlight.highlightedID = id
@@ -22,6 +24,12 @@ import UniformTypeIdentifiers
         appMode.enter()
         window.makeKeyAndOrderFront(nil)
         NSApp.activate()
+    }
+
+    /// Brings the Library forward with the new-diagram composer open (File > New Diagram, ⌘N).
+    static func showNewDiagram() {
+        show(highlighting: nil)
+        highlight.newDiagramRequested = true
     }
 
     private static func makeWindow() -> NSWindow {
@@ -62,9 +70,14 @@ final class InsetButtonsWindow: NSWindow {
 
 struct LibraryRootView: View {
     @ObservedObject var highlight: LibraryHighlight
+    var makeCreateSession: () -> DiagramCreateSession = {
+        DiagramCreateSession(creator: EngineDiagramCreator(models: .shared),
+                             voice: MicrophoneInstructionInput(models: .shared), library: .shared)
+    }
     @ObservedObject private var library = DiagramLibrary.shared
     @State private var selection: UUID?
     @State private var openID: UUID?
+    @State private var composer: DiagramCreateSession?
 
     private var openItem: LibraryItem? { openID.flatMap { id in library.items.first { $0.id == id } } }
 
@@ -76,8 +89,13 @@ struct LibraryRootView: View {
                     .transition(.move(edge: .trailing).combined(with: .opacity))
                     .zIndex(1)
             } else {
-                LibraryGridView(highlight: highlight, selection: $selection, open: open)
+                LibraryGridView(highlight: highlight, selection: $selection, isComposing: composer != nil, open: open)
                     .transition(.move(edge: .leading).combined(with: .opacity))
+            }
+            if let composer {
+                NewDiagramComposer(session: composer, finish: finishComposing)
+                    .transition(.opacity)
+                    .zIndex(2)
             }
         }
         .ignoresSafeArea()
@@ -88,9 +106,12 @@ struct LibraryRootView: View {
             selection = id
             close()
         }
+        .onChange(of: highlight.newDiagramRequested) { _, requested in if requested { startComposing() } }
         .onAppear {
             if let id = highlight.highlightedID { selection = id }
             if let id = highlight.openID { openID = id }
+            if highlight.newDiagramRequested { startComposing() }
+            createScriptedDiagram()
         }
     }
 
@@ -103,6 +124,32 @@ struct LibraryRootView: View {
 
     private func close() {
         withAnimation(.spring(response: 0.42, dampingFraction: 0.9)) { openID = nil }
+    }
+
+    /// The new diagram lands in the grid, so the composer always opens over it.
+    private func startComposing() {
+        highlight.newDiagramRequested = false
+        guard composer == nil else { return }
+        close()
+        withAnimation(.easeOut(duration: 0.2)) { composer = makeCreateSession() }
+    }
+
+    private func finishComposing(_ item: LibraryItem?) {
+        guard composer != nil else { return }
+        withAnimation(.easeOut(duration: 0.2)) { composer = nil }
+        if let item { highlight.highlightedID = item.id }
+    }
+
+    /// For checking creation from scripts: opens the composer and draws the description.
+    private func createScriptedDiagram() {
+        guard let description = ProcessInfo.processInfo.environment["TERMAID_NEW_DIAGRAM"] else { return }
+        startComposing()
+        composer?.instruction = description
+        // A pause so scripted screenshots can catch the composer before it draws.
+        Task {
+            try? await Task.sleep(for: .seconds(2))
+            composer?.applyInstruction()
+        }
     }
 }
 

@@ -8,6 +8,8 @@ struct LibraryGridView: View {
     @ObservedObject var highlight: LibraryHighlight
     @ObservedObject private var library = DiagramLibrary.shared
     @Binding var selection: UUID?
+    /// While the new-diagram composer is up, the grid gives up focus so its shortcuts stay quiet.
+    let isComposing: Bool
     let open: (LibraryItem) -> Void
     @FocusState private var focused: Bool
     @State private var columns = 3
@@ -53,10 +55,11 @@ struct LibraryGridView: View {
                 }
             }
         }
-        .focusable()
+        .focusable(!isComposing)
         .focusEffectDisabled()
         .focused($focused)
         .onAppear { focused = true }
+        .onChange(of: isComposing) { _, composing in if !composing { focused = true } }
         .onKeyPress(.leftArrow) { move(-1) }
         .onKeyPress(.rightArrow) { move(1) }
         .onKeyPress(.upArrow) { move(-columns) }
@@ -80,6 +83,9 @@ struct LibraryGridView: View {
                 .font(Obsidian.font(13))
                 .foregroundStyle(Obsidian.muted)
             Spacer()
+            SmallButton(symbol: "plus", label: "New", help: "New diagram (⌘N)", size: 28) {
+                highlight.newDiagramRequested = true
+            }
         }
         .padding(.horizontal, 32)
         .padding(.top, 46)  // clears the title bar
@@ -94,7 +100,7 @@ struct LibraryGridView: View {
             Text("No diagrams yet")
                 .font(Obsidian.font(15, .semibold))
                 .foregroundStyle(Obsidian.fg)
-            Text("Hold ⌥ Space and describe a flow, or press ⌥ T to type one.")
+            Text("Press ⌘N to describe a flow, or hold ⌥ Space anywhere and say one.")
                 .font(Obsidian.font(13))
                 .foregroundStyle(Obsidian.muted)
         }

@@ -19,7 +19,7 @@ final class AppModel: ObservableObject {
     @Published private(set) var phase: Phase = .idle
     @Published private(set) var hintVisible = false
     @Published private(set) var errorMessage: String?
-    @Published private(set) var workingLabel = "Transcribing…"
+    @Published private(set) var workingLabel = StatusLabel.transcribing
     @Published private(set) var levels = [Float](repeating: 0, count: AppModel.levelCount)
     @Published var typedText = ""
     /// The words recognized so far while listening; empty until the first ones arrive.
@@ -33,13 +33,15 @@ final class AppModel: ObservableObject {
     private let recorder = VoiceRecorder()
     private var recording = false
     private let models = ModelStore.shared
+    private let creator: DiagramCreating
     private lazy var live = LiveTranscript(recorder: recorder, models: models)
     private var workTask: Task<Void, Never>?
     /// Bumped whenever the current flow is abandoned, so late callbacks from it are ignored.
     private var generation = 0
     private var lastSavedID: UUID?
 
-    init() {
+    init(creator: DiagramCreating) {
+        self.creator = creator
         recorder.onLevel = { [weak self] level in
             Task { @MainActor in self?.pushLevel(level) }
         }
@@ -84,7 +86,7 @@ final class AppModel: ObservableObject {
         recording = false
         live.stop()
         phase = .working
-        workingLabel = models.speech.isReady ? "Transcribing…" : "Loading speech model…"
+        workingLabel = models.speech.isReady ? StatusLabel.transcribing : "Loading speech model…"
         let gen = generation
         workTask = Task { await self.finishVoice(gen: gen) }
     }
@@ -104,7 +106,7 @@ final class AppModel: ObservableObject {
         }
         reset()
         phase = .working
-        workingLabel = "Thinking…"
+        workingLabel = StatusLabel.thinking
         let gen = generation
         workTask = Task { await self.describe(text, gen: gen) }
     }
@@ -148,7 +150,7 @@ final class AppModel: ObservableObject {
 
     private func transcribe(_ url: URL) async throws -> String {
         let parakeet = try await models.transcriber()
-        workingLabel = "Transcribing…"
+        workingLabel = StatusLabel.transcribing
         return try await parakeet.transcribe(fileAt: url)
     }
 
@@ -159,41 +161,39 @@ final class AppModel: ObservableObject {
             fail(UserFacingError(message: "Didn't catch that"))
             return
         }
+        workingLabel = creator.workingLabel
         do {
-            let engine = try await loadEngine()
-            let sents = try await Task.detached { try engine.sentences(text) }.value
-            guard gen == generation, !sents.isEmpty else { return }
-
-            sentences = sents
-            title = Self.makeTitle(sents[0])
-            currentStep = 0
-            svgImage = nil
-            phase = .card
-
-            let mermaid = try await engine.convertStreaming(text) { [weak self] index, svg in
-                Task { @MainActor in self?.receiveStep(index, svg: svg, gen: gen) }
-            }
-            let finalSVG = try await Task.detached { try engine.toSvg(mermaid) }.value
+            let diagram = try await creator.create(from: text, onSentences: { [weak self] sents in
+                self?.showCard(sents, gen: gen)
+            }, onStep: { [weak self] index, svg in
+                self?.receiveStep(index, svg: svg, gen: gen)
+            })
             guard gen == generation else { return }
-            receiveStep(sents.count - 1, svg: finalSVG, gen: gen)
-
-            let item = DiagramLibrary.shared.add(title: title, description: text, mermaid: mermaid, svg: finalSVG)
-            lastSavedID = item.id
-            NSPasteboard.general.clearContents()
-            NSPasteboard.general.setString(mermaid, forType: .string)
-            // The saved card stays until the user clicks elsewhere or presses Esc.
-            phase = .saved
+            receiveStep(sentences.count - 1, svg: diagram.svg, gen: gen)
+            save(diagram, description: text)
         } catch {
             guard gen == generation else { return }
             fail(error)
         }
     }
 
-    private func loadEngine() async throws -> EmbeddedEngine {
-        if !models.diagram.isReady { workingLabel = "Loading diagram model…" }
-        let engine = try await models.engine()
-        workingLabel = "Thinking…"
-        return engine
+    private func showCard(_ sents: [String], gen: Int) {
+        guard gen == generation else { return }
+        sentences = sents
+        title = DiagramTitle.from(sents[0])
+        currentStep = 0
+        svgImage = nil
+        phase = .card
+    }
+
+    private func save(_ diagram: RenderedDiagram, description: String) {
+        let item = DiagramLibrary.shared.add(title: title, description: description,
+                                             mermaid: diagram.mermaid, svg: diagram.svg)
+        lastSavedID = item.id
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(diagram.mermaid, forType: .string)
+        // The saved card stays until the user clicks elsewhere or presses Esc.
+        phase = .saved
     }
 
     private func receiveStep(_ index: Int, svg: String, gen: Int) {
@@ -230,13 +230,5 @@ final class AppModel: ObservableObject {
         recording = false
         phase = .idle
         errorMessage = (error as? UserFacingError)?.message ?? error.localizedDescription
-    }
-
-    /// The first sentence's first five words, capitalized, without trailing punctuation.
-    static func makeTitle(_ sentence: String) -> String {
-        let words = sentence.split(whereSeparator: { $0.isWhitespace }).prefix(5).joined(separator: " ")
-        let trimmed = words.trimmingCharacters(in: CharacterSet(charactersIn: ".,;:!?"))
-        guard let first = trimmed.first else { return "Untitled flow" }
-        return String(first).uppercased() + String(trimmed.dropFirst())
     }
 }

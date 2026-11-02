@@ -5,15 +5,15 @@
 - [x] Need a logo for the app
 - [x] Decide diagram editing approach: instructions run through the model on top of the saved diagram; Mermaid source editor removed
 - [x] Update menu-bar icon to match the new green app icon
-- [ ] CI: GitHub Action for npm test + swift test, building engine.js instead of committing it
+- [x] CI: GitHub Action for npm test + swift test, building engine.js instead of committing it
 - [x] Add tests for the Swift app layer
 - [x] Test manually: Dock reopen, red listening tint, Save/relaunch persistence, E/Esc shortcuts in editor
-- [ ] Code signing and notarization
+- [x] Code signing and notarization
 - [x] Add a LICENSE file (compatible with the LFM Open License)
 - [x] Document or remove possibly unused training files: holdout-front.txt, grok_steps.py, haiku_label.py, eval_termaid.ts
 - [x] Fix stale comment in src/embeddedEngine.ts (references missing scripts/render-mockup-diagrams.ts)
 - [x] Test voice edits by hand (mic button in the editor)
-- [ ] Diagram creation through main app
+- [x] Diagram creation through main app
 - [x] Switch the app's model from lfm3-json-v1 to lfm3-v9 (6/8 edits vs 4/8, better on "in front of" and decisions)
 - [ ] Retrain the model on more data (Modal, LFM3-1.7B, same JSON-state format):
   - [ ] Scored eval first: gold diagrams for the 55 holdouts, ~80 edit cases, ~60 speech-noise cases (TTS → Parakeet); metrics for edge F1, decision structure, edit success, untouched-edge survival, latency

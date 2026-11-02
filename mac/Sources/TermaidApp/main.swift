@@ -4,7 +4,7 @@ import Combine
 /// Owns the capsule panel, the menu-bar item, the hotkeys and the app model.
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private let model = AppModel()
+    private let model = AppModel(creator: EngineDiagramCreator(models: .shared))
     private let hotkeys = Hotkeys()
     private var menuBar: MenuBar!
     private var panel: CapsulePanel!

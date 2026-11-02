@@ -1,17 +1,33 @@
 import SwiftUI
 
-/// Where a change is described: type it and press Return, or click the mic, speak, and press Return or stop.
+/// The words the instruction field uses, so the editor talks about changes and the composer about flows.
+struct InstructionPrompts {
+    let placeholder: String
+    let submitHelp: String
+    let speakHelp: String
+    let stopHelp: String
+
+    static let edit = InstructionPrompts(placeholder: "Describe a change…", submitHelp: "Apply change (Return)",
+                                         speakHelp: "Say a change", stopHelp: "Stop and apply (Return)")
+    static let create = InstructionPrompts(placeholder: "Describe a flow…", submitHelp: "Draw diagram (Return)",
+                                           speakHelp: "Say a flow", stopHelp: "Stop and draw (Return)")
+}
+
+/// Where an instruction is described: type it and press Return, or click the mic, speak, and press Return or stop.
 /// One trailing button: mic when empty, arrow once there's text, stop while listening.
-struct EditInstructionField: View {
-    @ObservedObject var session: DiagramEditSession
+struct InstructionField: View {
+    @ObservedObject var session: InstructionSession
+    var prompts = InstructionPrompts.edit
+    /// Leaves the instruction being run in the field, grayed, instead of letting it fly off to a list.
+    var showsPendingInstruction = false
     @FocusState private var focused: Bool
 
     private var listening: Bool { session.activity == .listening }
-    private var hasText: Bool { !session.instruction.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    private var hasText: Bool { !InstructionSession.trimmed(session.instruction).isEmpty }
 
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
-            TextField(listening ? "Listening…" : "Describe a change…", text: $session.instruction, axis: .vertical)
+            TextField(placeholder, text: $session.instruction, axis: .vertical)
                 .textFieldStyle(.plain)
                 .font(.system(size: 14, weight: .medium))
                 .foregroundStyle(.white)
@@ -19,7 +35,7 @@ struct EditInstructionField: View {
                 .lineLimit(1...5)
                 .focused($focused)
                 .onSubmit(submit)
-                .disabled(session.activity == .transcribing || session.activity == .applying)
+                .disabled(session.isBusy)
             trailingButton
         }
         .padding(.leading, 12)
@@ -36,6 +52,12 @@ struct EditInstructionField: View {
         .onChange(of: listening) { _, isListening in if isListening { focused = true } }
     }
 
+    private var placeholder: String {
+        if listening { return StatusLabel.listening }
+        if showsPendingInstruction, let pending = session.pendingInstruction { return pending }
+        return prompts.placeholder
+    }
+
     private func submit() {
         listening ? session.toggleListening() : session.applyInstruction()
     }
@@ -43,13 +65,13 @@ struct EditInstructionField: View {
     @ViewBuilder private var trailingButton: some View {
         if listening {
             // Return must stop listening even when the click on the mic took focus away from the field.
-            RoundIconButton(symbol: "stop.fill", filled: true, help: "Stop and apply (Return)", action: session.toggleListening)
+            RoundIconButton(symbol: "stop.fill", filled: true, help: prompts.stopHelp, action: session.toggleListening)
                 .keyboardShortcut(.defaultAction)
         } else if hasText {
-            RoundIconButton(symbol: "arrow.up", filled: true, help: "Apply change (Return)", action: session.applyInstruction)
+            RoundIconButton(symbol: "arrow.up", filled: true, help: prompts.submitHelp, action: session.applyInstruction)
                 .disabled(!session.canApply)
         } else {
-            RoundIconButton(symbol: "mic.fill", filled: false, help: "Say a change", action: session.toggleListening)
+            RoundIconButton(symbol: "mic.fill", filled: false, help: prompts.speakHelp, action: session.toggleListening)
                 .disabled(session.activity != .idle)
         }
     }
