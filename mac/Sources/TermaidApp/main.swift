@@ -49,6 +49,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             SetupWindow.show { [weak self] in self?.model.flashHint() }
         } else {
             ModelStore.shared.prepare()
+            // Opening the app from Spotlight, Finder or Launchpad should show it, not just the menu-bar icon.
+            LibraryWindow.show(highlighting: nil)
             model.flashHint()
         }
         // For checking the Library by eye or from scripts: "grid" or "detail" (opens the newest diagram).
