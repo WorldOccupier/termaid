@@ -31,7 +31,7 @@ with [Pele](https://github.com/obsidianmd/pele).
 ## Mac engine
 
 ```sh
-npm run build:engine            # rebuild mac/Sources/TermaidCore/Resources/engine.js after changing src/
+npm run build:engine            # build mac/Sources/TermaidCore/Resources/engine.js (not committed; rerun after changing src/)
 cd mac && swift build -c release
 .build/release/termaid-mac diagram ../training/gguf/lfm3-json-v1-q6_k.gguf "build, then test, then deploy"
 .build/release/termaid-mac transcribe clip.wav     # 16 kHz mono WAV
@@ -72,9 +72,21 @@ Check every checkpoint against `holdout.txt` (never in the training data). A lea
 diverged. Use Q6_K, not Q4_K_M: on the 55 holdout descriptions, Q6_K produced the same diagram as
 the unquantized model for 27 and Q4_K_M for only 17, for about 15% more speed.
 
+Other training files:
+
+- `holdout-front.txt`: hand-written "in front of" / "behind" routing cases, kept out of training like
+  the other holdout files.
+- `eval_termaid.ts`: runs holdout descriptions through the app's own pipeline (checks and retries
+  included) against an Ollama model: `node training/eval_termaid.ts <model> <descriptions.txt>`.
+
 ## Test
 
 ```sh
 npm test
 cd mac && swift test
 ```
+
+## License
+
+The code is MIT (see `LICENSE`). Fine-tuned model weights are covered by the
+[LFM Open License v1.0](https://huggingface.co/LiquidAI/LFM3-1.7B/blob/main/LICENSE).
