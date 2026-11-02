@@ -7,9 +7,10 @@ import { splitSentences } from "./sentences.ts";
 import { flattenCssVariables } from "./svgFlattener.ts";
 import { styled } from "./svgStyler.ts";
 import { TextToMermaid } from "./textToMermaid.ts";
+import { emptyState, type DiagramState } from "./diagramState.ts";
+import { stateFromMermaid } from "./mermaidState.ts";
 
 const renderer = new PeleRenderer();
-// The look the mockups use (scripts/render-mockup-diagrams.ts).
 const APP_LAYOUT = { fontSize: 18, config: { flowchart: { nodeSpacing: 28, rankSpacing: 36 } } };
 
 // Themed, with every CSS variable resolved: macOS's SVG renderer ignores them, so a raw Pele SVG
@@ -28,12 +29,32 @@ export function convert(description: string, complete: HostCompletion): Promise<
 
 // Runs the per-sentence loop; after each sentence, onStep gets the SVG of the diagram so far.
 // A step that fails to render is skipped; the final result is still validated like `convert`.
-export async function convertSteps(
+export function convertSteps(
   description: string,
   complete: HostCompletion,
   onStep: (index: number, svg: string) => void,
 ): Promise<string> {
-  const state = await converter(complete).describe(description, (index, step) => {
+  return streamSteps(description, emptyState(), complete, onStep);
+}
+
+// Applies a typed or spoken change ("remove the cache", "add a queue after the API") to a diagram
+// this engine generated, one sentence at a time, and returns the updated Mermaid.
+export function editSteps(
+  mermaid: string,
+  instruction: string,
+  complete: HostCompletion,
+  onStep: (index: number, svg: string) => void,
+): Promise<string> {
+  return streamSteps(instruction, stateFromMermaid(mermaid), complete, onStep);
+}
+
+async function streamSteps(
+  text: string,
+  start: DiagramState,
+  complete: HostCompletion,
+  onStep: (index: number, svg: string) => void,
+): Promise<string> {
+  const state = await converter(complete).describe(text, (index, step) => {
     let svg: string;
     try {
       svg = appSvg(TextToMermaid.mermaidFor(step));
@@ -41,7 +62,7 @@ export async function convertSteps(
       return;
     }
     onStep(index, svg);
-  });
+  }, start);
   const mermaid = TextToMermaid.mermaidFor(state);
   renderer.validate(mermaid);
   return mermaid;

@@ -11,12 +11,15 @@ struct LibraryDetailView: View {
     let open: (LibraryItem) -> Void
     let close: () -> Void
     var makeEditSession: (LibraryItem) -> DiagramEditSession = { item in
-        DiagramEditSession(item: item, renderer: EngineMermaidRenderer.shared, library: DiagramLibrary.shared)
+        DiagramEditSession(item: item, editor: EngineDiagramEditor(models: .shared),
+                           voice: MicrophoneInstructionInput(models: .shared), library: .shared)
     }
     @FocusState private var focused: Bool
     @State private var copied: String?
     @AppStorage("libraryInfoOpen") private var showInfo = false
     @State private var editSession: DiagramEditSession?
+    /// Which way the last arrow stepped, so the next diagram enters from that side.
+    @State private var stepDirection: CGFloat = 1
 
     var body: some View {
         VStack(spacing: 0) {
@@ -45,7 +48,10 @@ struct LibraryDetailView: View {
         .focusable()
         .focusEffectDisabled()
         .focused($focused)
-        .onAppear { focused = true }
+        .onAppear {
+            focused = true
+            applyScriptedEdit()
+        }
         .onExitCommand { editSession == nil ? close() : cancelEdit() }
         .onKeyPress(.escape) { editSession == nil ? close() : cancelEdit(); return .handled }
         .onKeyPress(.space) { browsing { close() } }
@@ -73,7 +79,7 @@ struct LibraryDetailView: View {
         }
             .padding(32)
             .id(item.id)
-            .transition(.opacity)
+            .transition(.diagramSwap(direction: stepDirection))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .onDrag { Actions.dragProvider(item) }
     }
@@ -87,6 +93,18 @@ struct LibraryDetailView: View {
 
     private func startEdit() {
         withAnimation(.spring(response: 0.35, dampingFraction: 0.9)) { editSession = makeEditSession(item) }
+    }
+
+    /// For checking editing from scripts: opens the editor and applies the change.
+    private func applyScriptedEdit() {
+        guard let change = ProcessInfo.processInfo.environment["TERMAID_EDIT_INSTRUCTION"], editSession == nil else { return }
+        startEdit()
+        editSession?.instruction = change
+        // A pause so scripted screenshots can catch the change leaving the field.
+        Task {
+            try? await Task.sleep(for: .seconds(3))
+            editSession?.applyInstruction()
+        }
     }
 
     private func saveEdit() {
@@ -260,7 +278,8 @@ struct LibraryDetailView: View {
 
     private func step(_ delta: Int) -> KeyPress.Result {
         guard canStep(delta) else { return .ignored }
-        withAnimation(.easeOut(duration: 0.2)) { open(items[position + delta]) }
+        stepDirection = delta < 0 ? -1 : 1
+        withAnimation(.spring(duration: 0.55, bounce: 0.32)) { open(items[position + delta]) }
         return .handled
     }
 

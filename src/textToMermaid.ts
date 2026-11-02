@@ -4,6 +4,7 @@ import { toMermaid } from "./mermaid.ts";
 import type { JsonCompletionClient } from "./ollamaClient.ts";
 import type { MermaidRenderer } from "./peleRenderer.ts";
 import { splitSentences } from "./sentences.ts";
+import { requestedDirection } from "./layoutCommand.ts";
 
 const CONDITION_CLAUSE = /(^|[\s,(])(only\s+)?(if|when|unless|otherwise|else)\b.*$/i;
 
@@ -79,18 +80,25 @@ export class TextToMermaid {
 
   // One model call per sentence keeps every step as small as a single-sentence description, so
   // long descriptions don't overwhelm a small model. `onStep` sees the diagram after each sentence.
+  // Starting from an existing diagram turns the description into a list of changes to it.
   async describe(
     description: string,
     onStep?: (index: number, state: DiagramState) => void,
+    start: DiagramState = emptyState(),
   ): Promise<DiagramState> {
-    let state = emptyState();
+    let state = start;
     const sentences = splitSentences(description);
     for (const [index, sentence] of sentences.entries()) {
-      const request = formatUpdateRequest(state, sentence);
-      state = normalizeReply(await this.llm.completeJson(PER_SENTENCE_PROMPT, request, REPLY_SCHEMA));
+      const direction = requestedDirection(sentence);
+      state = direction ? { ...state, direction } : await this.update(state, sentence);
       onStep?.(index, state);
     }
     return state;
+  }
+
+  private async update(state: DiagramState, sentence: string): Promise<DiagramState> {
+    const request = formatUpdateRequest(state, sentence);
+    return normalizeReply(await this.llm.completeJson(PER_SENTENCE_PROMPT, request, REPLY_SCHEMA));
   }
 
   /// The Mermaid source for a diagram state (unvalidated).

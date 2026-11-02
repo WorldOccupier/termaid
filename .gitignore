@@ -6,7 +6,6 @@ training/fused/
 training/*.log
 training/best-adapter/
 training/gguf/
-training/fused/
 training/ckpt-*/
 training/eval-*.txt
 training/probe-*.jsonl

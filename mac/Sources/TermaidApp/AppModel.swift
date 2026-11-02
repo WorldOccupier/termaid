@@ -22,6 +22,8 @@ final class AppModel: ObservableObject {
     @Published private(set) var workingLabel = "Transcribing…"
     @Published private(set) var levels = [Float](repeating: 0, count: AppModel.levelCount)
     @Published var typedText = ""
+    /// The words recognized so far while listening; empty until the first ones arrive.
+    @Published private(set) var liveTranscript = ""
     @Published private(set) var sentences: [String] = []
     @Published private(set) var currentStep = 0
     @Published private(set) var title = ""
@@ -31,6 +33,7 @@ final class AppModel: ObservableObject {
     private let recorder = VoiceRecorder()
     private var recording = false
     private let models = ModelStore.shared
+    private lazy var live = LiveTranscript(recorder: recorder, models: models)
     private var workTask: Task<Void, Never>?
     /// Bumped whenever the current flow is abandoned, so late callbacks from it are ignored.
     private var generation = 0
@@ -69,12 +72,17 @@ final class AppModel: ObservableObject {
         }
         recording = true
         levels = [Float](repeating: 0, count: Self.levelCount)
+        live.start { [weak self] text in
+            guard let self, self.phase == .listening else { return }
+            self.liveTranscript = text
+        }
         phase = .listening
     }
 
     func voiceUp() {
         guard recording else { return }
         recording = false
+        live.stop()
         phase = .working
         workingLabel = models.speech.isReady ? "Transcribing…" : "Loading speech model…"
         let gen = generation
@@ -213,6 +221,8 @@ final class AppModel: ObservableObject {
         hintVisible = false
         errorMessage = nil
         typedText = ""
+        liveTranscript = ""
+        live.stop()
     }
 
     private func fail(_ error: Error) {

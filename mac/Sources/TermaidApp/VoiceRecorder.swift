@@ -25,6 +25,7 @@ final class VoiceRecorder {
     private var converter: AVAudioConverter?
     private var outputURL: URL?
     private var smoothed: Float = 0
+    private var samples: [Float] = []
 
     func start() throws {
         lock.lock(); let busy = file != nil; lock.unlock()
@@ -52,7 +53,7 @@ final class VoiceRecorder {
         ]
         let newFile = try AVAudioFile(forWriting: url, settings: settings,
                                       commonFormat: .pcmFormatFloat32, interleaved: false)
-        lock.lock(); file = newFile; converter = conv; outputURL = url; smoothed = 0; lock.unlock()
+        lock.lock(); file = newFile; converter = conv; outputURL = url; smoothed = 0; samples = []; lock.unlock()
 
         input.installTap(onBus: 0, bufferSize: 1600, format: hwFormat) { [weak self] buffer, _ in
             self?.process(buffer)
@@ -76,6 +77,12 @@ final class VoiceRecorder {
         return url
     }
 
+    /// Everything recorded so far as 16 kHz mono samples, for showing a transcript while the user speaks.
+    func recordedSamples() -> [Float] {
+        lock.lock(); defer { lock.unlock() }
+        return samples
+    }
+
     private func currentURL() -> URL? {
         lock.lock(); defer { lock.unlock() }
         return outputURL
@@ -83,7 +90,7 @@ final class VoiceRecorder {
 
     private func clearState() {
         lock.lock(); defer { lock.unlock() }
-        file = nil; converter = nil; outputURL = nil
+        file = nil; converter = nil; outputURL = nil; samples = []
     }
 
     private func process(_ input: AVAudioPCMBuffer) {
@@ -99,12 +106,13 @@ final class VoiceRecorder {
             status.pointee = .haveData
             return input
         }
-        guard error == nil, out.frameLength > 0, let samples = out.floatChannelData?[0] else { return }
+        guard error == nil, out.frameLength > 0, let converted = out.floatChannelData?[0] else { return }
         try? file.write(from: out)
+        samples.append(contentsOf: UnsafeBufferPointer(start: converted, count: Int(out.frameLength)))
 
         // RMS -> dBFS -> 0...1 over -50...0 dB, then a little smoothing so the meter doesn't jitter.
         var sum: Float = 0
-        for i in 0..<Int(out.frameLength) { sum += samples[i] * samples[i] }
+        for i in 0..<Int(out.frameLength) { sum += converted[i] * converted[i] }
         let rms = (sum / Float(out.frameLength)).squareRoot()
         let db = 20 * log10(max(rms, 1e-6))
         let level = min(max((db + 50) / 50, 0), 1)

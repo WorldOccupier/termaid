@@ -22,6 +22,18 @@ extension EmbeddedEngine {
     /// Returns the final Mermaid source. `onStep` runs on the engine queue, so hop to main before touching UI.
     public func convertStreaming(_ description: String,
                                  onStep: @escaping @Sendable (_ index: Int, _ svg: String) -> Void) async throws -> String {
+        try await stream("convertSteps", [description], onStep: onStep)
+    }
+
+    /// Applies a plain-language change to Mermaid this engine generated, one sentence at a time, and returns
+    /// the updated Mermaid. `onStep` behaves as in `convertStreaming`.
+    public func editStreaming(_ mermaid: String, instruction: String,
+                              onStep: @escaping @Sendable (_ index: Int, _ svg: String) -> Void) async throws -> String {
+        try await stream("editSteps", [mermaid, instruction], onStep: onStep)
+    }
+
+    private func stream(_ method: String, _ arguments: [String],
+                        onStep: @escaping @Sendable (Int, String) -> Void) async throws -> String {
         try await withCheckedThrowingContinuation { continuation in
             queue.async { [self] in
                 // JS numbers arrive as Double; convert to Int only after the engine has produced them.
@@ -32,7 +44,7 @@ extension EmbeddedEngine {
                 let onFailure: @convention(block) (JSValue) -> Void = {
                     continuation.resume(throwing: EngineError(message: $0.objectForKeyedSubscript("message")?.toString() ?? $0.toString()))
                 }
-                let promise = engine.invokeMethod("convertSteps", withArguments: [description, hostCompletion(), step])
+                let promise = engine.invokeMethod(method, withArguments: arguments + [hostCompletion(), step])
                 if let exception = context.exception {
                     context.exception = nil
                     continuation.resume(throwing: EngineError(message: exception.toString()))

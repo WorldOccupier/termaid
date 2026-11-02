@@ -5,7 +5,7 @@ import TermaidCore
 //   termaid-mac transcribe <file.wav>
 //   termaid-mac diagram <model.gguf> "description"
 //   termaid-mac eval <model.gguf> <descriptions.txt>   (JSON lines for scripts/compare-engines.ts)
-let usage = "usage: termaid-mac transcribe <file.wav> | diagram <model.gguf> <text> | eval <model.gguf> <descriptions.txt>"
+let usage = "usage: termaid-mac transcribe <file.wav> | diagram <model.gguf> <text> | edit <model.gguf> <file.mmd> <change> | eval <model.gguf> <descriptions.txt>"
 
 func log(_ message: String) {
     FileHandle.standardError.write(Data((message + "\n").utf8))
@@ -37,6 +37,14 @@ func diagram(modelPath: String, description: String) async throws {
     log(timing("diagram", since: start))
 }
 
+func edit(modelPath: String, mermaidPath: String, change: String) async throws {
+    let engine = try EmbeddedEngine(model: try LlamaModel(path: modelPath))
+    let mermaid = try String(contentsOfFile: mermaidPath, encoding: .utf8)
+    let start = ContinuousClock.now
+    print(try await engine.editStreaming(mermaid, instruction: change) { _, _ in }, terminator: "")
+    log(timing("edit", since: start))
+}
+
 func evaluate(modelPath: String, descriptionsPath: String) async throws {
     let engine = try EmbeddedEngine(model: try LlamaModel(path: modelPath))
     let descriptions = try String(contentsOfFile: descriptionsPath, encoding: .utf8).split(separator: "\n").map(String.init)
@@ -59,6 +67,7 @@ do {
     switch (arguments.first, arguments.count) {
     case ("transcribe", 2): try await transcribe(arguments[1])
     case ("diagram", 3): try await diagram(modelPath: arguments[1], description: arguments[2])
+    case ("edit", 4): try await edit(modelPath: arguments[1], mermaidPath: arguments[2], change: arguments[3])
     case ("eval", 3): try await evaluate(modelPath: arguments[1], descriptionsPath: arguments[2])
     default:
         log(usage)

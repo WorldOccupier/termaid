@@ -33,6 +33,12 @@ public actor ParakeetTranscriber: AudioFileTranscribing {
         return ParakeetTranscriber(manager: manager)
     }
 
+    /// 16 kHz mono samples, e.g. the audio recorded so far while the user is still speaking.
+    public func transcribe(samples: [Float]) async throws -> String {
+        var decoderState = TdtDecoderState.make(decoderLayers: await manager.decoderLayerCount)
+        return try await manager.transcribe(samples, decoderState: &decoderState).text
+    }
+
     public func transcribe(fileAt url: URL) async throws -> String {
         var decoderState = TdtDecoderState.make(decoderLayers: await manager.decoderLayerCount)
         return try await manager.transcribe(url, decoderState: &decoderState).text

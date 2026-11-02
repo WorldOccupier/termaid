@@ -1,21 +1,27 @@
 import SwiftUI
 
-/// The editing card beside the live preview: title, Mermaid source, the latest render error, Cancel and Save.
+/// The editing card beside the live preview: title, the changes applied so far, a field to describe the next
+/// one by text or voice, and Undo, Cancel and Save.
 struct DiagramEditorPanel: View {
     @ObservedObject var session: DiagramEditSession
     let save: () -> Void
     let cancel: () -> Void
+    /// The pending change whose flight has finished, so its row text can show.
+    @State private var landedChange: String?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             label("Title")
             titleField
-            label("Mermaid")
-            sourceEditor
+            label("Changes")
+            changeList
+            EditInstructionField(session: session)
             status
             buttons
         }
         .padding(18)
+        .overlayPreferenceValue(FlightAnchorKey.self, flight)
+        .onChange(of: session.pendingChange) { _, pending in if pending == nil { landedChange = nil } }
         .background(RoundedRectangle(cornerRadius: 14).fill(Color.white.opacity(0.03)))
         .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(Obsidian.border.opacity(0.6)))
         .padding(.trailing, 16)
@@ -29,45 +35,86 @@ struct DiagramEditorPanel: View {
             .foregroundStyle(Obsidian.fg)
             .padding(.horizontal, 10)
             .frame(height: 30)
-            .background(fieldBackground)
+            .background(RoundedRectangle(cornerRadius: 8).fill(Color.black.opacity(0.35)))
+            .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(Obsidian.border.opacity(0.7)))
     }
 
-    private var sourceEditor: some View {
-        MermaidSourceEditor(text: $session.mermaid)
-            .padding(4)
-            .frame(maxHeight: .infinity)
-            .background(fieldBackground)
+    private var changeList: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                if session.appliedChanges.isEmpty && session.pendingChange == nil {
+                    Text("Say or type what to change. Each change redraws the diagram, and Undo steps back.")
+                        .foregroundStyle(Obsidian.muted)
+                }
+                ForEach(Array(session.appliedChanges.enumerated()), id: \.offset) { index, change in
+                    appliedRow(change, isNewest: index == session.appliedChanges.count - 1)
+                }
+                if let pending = session.pendingChange {
+                    PendingChangeRow(text: pending, landed: landedChange == pending)
+                }
+            }
+            .font(Obsidian.font(12.5))
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxHeight: .infinity)
     }
 
-    /// One line, so a long parser message never pushes the buttons around.
+    private func appliedRow(_ change: String, isNewest: Bool) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 6) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundStyle(isNewest ? Obsidian.green : Obsidian.muted)
+                .symbolEffect(.bounce, value: isNewest ? session.appliedChanges.count : 0)
+            Text(change).foregroundStyle(Obsidian.fg)
+        }
+    }
+
+    @ViewBuilder private func flight(_ anchors: [String: Anchor<CGRect>]) -> some View {
+        GeometryReader { proxy in
+            if let change = session.pendingChange, landedChange != change,
+               let source = anchors[FlightAnchor.source], let target = anchors[FlightAnchor.target] {
+                ChangeFlight(text: change, from: proxy[source], to: proxy[target]) { landedChange = change }
+                    .id(change)
+            }
+        }
+    }
+
+    /// One short line, so a long error never pushes the buttons around.
     @ViewBuilder private var status: some View {
-        if let error = session.renderError {
+        if let error = session.errorMessage {
             Label(error, systemImage: "exclamationmark.triangle.fill")
-                .font(Obsidian.font(11.5))
                 .foregroundStyle(Obsidian.rose)
                 .lineLimit(2)
                 .help(error)
-        } else {
-            Label(session.isRendering ? "Rendering…" : "Preview is up to date",
-                  systemImage: session.isRendering ? "arrow.triangle.2.circlepath" : "checkmark")
                 .font(Obsidian.font(11.5))
+        } else if let working = workingText {
+            Label(working, systemImage: "arrow.triangle.2.circlepath")
                 .foregroundStyle(Obsidian.muted)
+                .font(Obsidian.font(11.5))
+        }
+    }
+
+    private var workingText: String? {
+        switch session.activity {
+        case .idle: return nil
+        case .listening: return "Listening…"
+        case .transcribing: return "Transcribing…"
+        case .applying: return "Redrawing…"
         }
     }
 
     private var buttons: some View {
         HStack(spacing: 6) {
+            ActionRow(symbol: "arrow.uturn.backward", title: "Undo", help: "Undo last change (⌘Z)", action: session.undo)
+                .disabled(!session.canUndo)
+                .opacity(session.canUndo ? 1 : 0.4)
+                .keyboardShortcut("z", modifiers: .command)
+            Spacer()
             ActionRow(symbol: "xmark", title: "Cancel", help: "Discard changes (Esc)", action: cancel)
             ActionRow(symbol: "checkmark", title: "Save", help: "Save changes (⌘S)", action: save)
                 .disabled(!session.canSave)
                 .opacity(session.canSave ? 1 : 0.4)
                 .keyboardShortcut("s", modifiers: .command)
         }
-    }
-
-    private var fieldBackground: some View {
-        RoundedRectangle(cornerRadius: 8).fill(Color.black.opacity(0.35))
-            .overlay(RoundedRectangle(cornerRadius: 8).strokeBorder(Obsidian.border.opacity(0.7)))
     }
 
     private func label(_ title: String) -> some View {
@@ -78,7 +125,7 @@ struct DiagramEditorPanel: View {
     }
 }
 
-/// The draft's latest good rendering; observes the session so it redraws as the source changes.
+/// The draft's latest rendering; observes the session so it redraws after each change.
 struct DiagramEditPreview: View {
     @ObservedObject var session: DiagramEditSession
 

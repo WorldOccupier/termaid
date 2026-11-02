@@ -33,15 +33,15 @@ struct LibraryItem: Codable, Identifiable, Equatable {
 
     func rename(_ id: UUID, to title: String) {
         guard let old = items.first(where: { $0.id == id }) else { return }
-        update(id, title: title, mermaid: old.mermaid, svg: old.svg)
+        update(id, title: title, description: old.description, mermaid: old.mermaid, svg: old.svg)
     }
 
-    /// Replaces an item's title and diagram in place, keeping its id, prompt and creation date. A blank title is ignored.
-    func update(_ id: UUID, title: String, mermaid: String, svg: String) {
+    /// Replaces an item's title, prompt and diagram in place, keeping its id and creation date. A blank title is ignored.
+    func update(_ id: UUID, title: String, description: String, mermaid: String, svg: String) {
         let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty, let index = items.firstIndex(where: { $0.id == id }) else { return }
         let old = items[index]
-        items[index] = LibraryItem(id: old.id, title: trimmed, description: old.description,
+        items[index] = LibraryItem(id: old.id, title: trimmed, description: description,
                                    mermaid: mermaid, svg: svg, created: old.created)
         save()
     }

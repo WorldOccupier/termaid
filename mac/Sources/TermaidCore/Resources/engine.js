@@ -23,6 +23,7 @@ var termaidEngine = (() => {
     convert: () => convert,
     convertSteps: () => convertSteps,
     describe: () => describe,
+    editSteps: () => editSteps,
     sentences: () => sentences,
     toSvg: () => toSvg
   });
@@ -21801,6 +21802,17 @@ ${INDENT}`) + "\n";
     return `${sanitizeId(edge.from)} ${arrow} ${sanitizeId(edge.to)}`;
   }
 
+  // src/layoutCommand.ts
+  var MAX_WORDS = 8;
+  var TOP_DOWN = /\b(top[\s-]+(to|down)[\s-]+bottom|vertical(ly)?|downwards?)\b/i;
+  var LEFT_RIGHT = /\b(left[\s-]+to[\s-]+right|horizontal(ly)?|sideways)\b/i;
+  function requestedDirection(sentence) {
+    if (sentence.trim().split(/\s+/).length > MAX_WORDS) return void 0;
+    if (TOP_DOWN.test(sentence)) return "TD";
+    if (LEFT_RIGHT.test(sentence)) return "LR";
+    return void 0;
+  }
+
   // src/textToMermaid.ts
   var CONDITION_CLAUSE = /(^|[\s,(])(only\s+)?(if|when|unless|otherwise|else)\b.*$/i;
   var REPLY_SCHEMA = {
@@ -21865,15 +21877,20 @@ Reply: {"direction": "LR", "boxes": ["User", "Web App", "Gateway", "API"], "edge
     }
     // One model call per sentence keeps every step as small as a single-sentence description, so
     // long descriptions don't overwhelm a small model. `onStep` sees the diagram after each sentence.
-    async describe(description, onStep) {
-      let state = emptyState();
+    // Starting from an existing diagram turns the description into a list of changes to it.
+    async describe(description, onStep, start = emptyState()) {
+      let state = start;
       const sentences2 = splitSentences(description);
       for (const [index, sentence] of sentences2.entries()) {
-        const request = formatUpdateRequest(state, sentence);
-        state = normalizeReply(await this.llm.completeJson(PER_SENTENCE_PROMPT, request, REPLY_SCHEMA));
+        const direction = requestedDirection(sentence);
+        state = direction ? { ...state, direction } : await this.update(state, sentence);
         onStep?.(index, state);
       }
       return state;
+    }
+    async update(state, sentence) {
+      const request = formatUpdateRequest(state, sentence);
+      return normalizeReply(await this.llm.completeJson(PER_SENTENCE_PROMPT, request, REPLY_SCHEMA));
     }
     /// The Mermaid source for a diagram state (unvalidated).
     static mermaidFor(state) {
@@ -21902,6 +21919,29 @@ Reply: {"direction": "LR", "boxes": ["User", "Web App", "Gateway", "API"], "edge
     return label.replace(CONDITION_CLAUSE, "").trim();
   }
 
+  // src/mermaidState.ts
+  var HEADER = /^flowchart\s+(TD|LR)\b/;
+  var NODE = /^(n_\w+)(?:\["(.*)"\]|\{"(.*)"\})$/;
+  var EDGE = /^(n_\w+)\s+-->(?:\|"(.*)"\|)?\s+(n_\w+)$/;
+  function stateFromMermaid(mermaid) {
+    const lines = mermaid.split("\n").map((line) => line.trim()).filter(Boolean);
+    const direction = lines[0]?.match(HEADER)?.[1] ?? "LR";
+    const labels = /* @__PURE__ */ new Map();
+    const edges = [];
+    for (const line of lines.slice(1)) {
+      const node = line.match(NODE);
+      if (node) labels.set(node[1], unescapeLabel(node[2] ?? node[3]));
+      const edge = line.match(EDGE);
+      if (edge && labels.has(edge[1]) && labels.has(edge[3])) {
+        edges.push([labels.get(edge[1]), labels.get(edge[3]), unescapeLabel(edge[2] ?? "")]);
+      }
+    }
+    return { direction, boxes: [...labels.values()], edges };
+  }
+  function unescapeLabel(label) {
+    return label.replace(/#quot;/g, '"');
+  }
+
   // src/embeddedEngine.ts
   var renderer = new PeleRenderer();
   var APP_LAYOUT = { fontSize: 18, config: { flowchart: { nodeSpacing: 28, rankSpacing: 36 } } };
@@ -21914,8 +21954,14 @@ Reply: {"direction": "LR", "boxes": ["User", "Web App", "Gateway", "API"], "edge
   function convert(description, complete) {
     return converter(complete).convert(description);
   }
-  async function convertSteps(description, complete, onStep) {
-    const state = await converter(complete).describe(description, (index, step) => {
+  function convertSteps(description, complete, onStep) {
+    return streamSteps(description, emptyState(), complete, onStep);
+  }
+  function editSteps(mermaid, instruction, complete, onStep) {
+    return streamSteps(instruction, stateFromMermaid(mermaid), complete, onStep);
+  }
+  async function streamSteps(text, start, complete, onStep) {
+    const state = await converter(complete).describe(text, (index, step) => {
       let svg;
       try {
         svg = appSvg(TextToMermaid.mermaidFor(step));
@@ -21923,7 +21969,7 @@ Reply: {"direction": "LR", "boxes": ["User", "Web App", "Gateway", "API"], "edge
         return;
       }
       onStep(index, svg);
-    });
+    }, start);
     const mermaid = TextToMermaid.mermaidFor(state);
     renderer.validate(mermaid);
     return mermaid;

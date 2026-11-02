@@ -62,9 +62,12 @@ struct CapsuleRootView: View {
     private var listening: some View {
         HStack(spacing: 12) {
             MicBadge(symbol: "mic.fill", color: .recordRed)
-            Text("Listening…")
+            // The newest words matter most, so long transcripts are cut at the start.
+            Text(model.liveTranscript.isEmpty ? "Listening…" : model.liveTranscript)
                 .font(.system(size: 15, weight: .medium))
-                .foregroundStyle(Color(white: 0.75))
+                .foregroundStyle(model.liveTranscript.isEmpty ? Color(white: 0.75) : .white)
+                .lineLimit(1)
+                .truncationMode(.head)
             Spacer(minLength: 0)
             Waveform(levels: model.levels)
         }

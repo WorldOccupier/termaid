@@ -23,7 +23,7 @@ struct LibraryGridView: View {
                 empty
             } else {
                 ScrollViewReader { proxy in
-                    ScrollView {
+                    BouncyScrollView {
                         LazyVStack(alignment: .leading, spacing: 30) {
                             ForEach(groups) { group in
                                 VStack(alignment: .leading, spacing: 14) {
@@ -48,7 +48,7 @@ struct LibraryGridView: View {
                     }
                     .onChange(of: selection) { _, id in
                         guard let id else { return }
-                        withAnimation(.easeOut(duration: 0.2)) { proxy.scrollTo(id) }
+                        withAnimation(.spring(duration: 0.5, bounce: 0.3)) { proxy.scrollTo(id) }
                     }
                 }
             }
