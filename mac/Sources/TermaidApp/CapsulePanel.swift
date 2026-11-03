@@ -2,11 +2,14 @@ import AppKit
 import SwiftUI
 
 enum CapsuleMetrics {
-    /// The panel's frame: the largest shape plus room for its shadow.
-    static let panelSize = CGSize(width: 820, height: 360)
     static let pill = CGSize(width: 236, height: 36)
     static let bar = CGSize(width: 540, height: 54)
     static let card = CGSize(width: 800, height: 324)
+    /// Clear margin around the shape on every side, wide enough for its whole shadow (22pt blur,
+    /// 10pt down). Any less and the window edge cuts the shadow off in a square-cornered band.
+    static let shadowInset: CGFloat = 48
+    /// The panel's frame: the largest shape plus room for its shadow.
+    static let panelSize = CGSize(width: card.width + shadowInset * 2, height: card.height + shadowInset * 2)
 }
 
 /// Borderless, non-activating panel that floats under the menu-bar icon.
@@ -50,10 +53,10 @@ final class CapsuleHostingView: NSHostingView<CapsuleRootView> {
     override func hitTest(_ point: NSPoint) -> NSView? {
         let local = convert(point, from: superview)
         let size = shapeSize()
-        // The shape is anchored top-center; this view's origin is bottom-left.
+        // The shape is anchored top-center below the shadow inset; this view's origin is bottom-left.
         let shape = CGRect(
             x: (bounds.width - size.width) / 2,
-            y: bounds.height - size.height,
+            y: bounds.height - CapsuleMetrics.shadowInset - size.height,
             width: size.width,
             height: size.height
         )

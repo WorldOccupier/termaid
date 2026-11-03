@@ -4,7 +4,7 @@
 # Usage: scripts/verify-library.sh   (from mac/). Screenshots land in /tmp/termaid-library-*.png
 set -euo pipefail
 cd "$(dirname "$0")/.."
-MODEL="${TERMAID_MODEL:-$PWD/../training/gguf/lfm3-json-v1-q6_k.gguf}"
+MODEL="${TERMAID_MODEL:-$PWD/../training/gguf/lfm3-v10-q6_k.gguf}"
 fail() { echo "FAIL: $*"; exit 1; }
 
 echo "• swift build"; swift build 2>&1 | grep -q "Build complete" || fail "swift build"

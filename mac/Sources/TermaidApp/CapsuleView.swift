@@ -41,6 +41,7 @@ struct CapsuleRootView: View {
             .frame(width: size.width, height: size.height)
             .animation(curve, value: size)
         }
+        .padding(.top, CapsuleMetrics.shadowInset)
         .frame(width: CapsuleMetrics.panelSize.width, height: CapsuleMetrics.panelSize.height, alignment: .top)
         .onChange(of: model.phase) { _, phase in
             if phase == .typing {

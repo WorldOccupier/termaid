@@ -16,6 +16,18 @@ struct DiagramDrawingCard: View {
     static let growCurve = Animation.timingCurve(0.3, 1.12, 0.45, 1, duration: 0.76)
     static let cornerRadius: CGFloat = 30
 
+    /// The canvas image for a step's SVG. The SVG carries its own framed backdrop (for the Library
+    /// and exports); the card is already that surface, so the backdrop is dropped here, otherwise
+    /// it shows as a second rounded box with its own spotlight inside the canvas.
+    static func canvasImage(svg: String) -> NSImage? {
+        NSImage(data: Data(canvasSVG(svg).utf8))
+    }
+
+    static func canvasSVG(_ svg: String) -> String {
+        svg.replacingOccurrences(of: #"<g class="termaid-backdrop">[\s\S]*?</g>"#,
+                                 with: "", options: .regularExpression)
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             header
@@ -77,6 +89,7 @@ struct DiagramDrawingCard: View {
         ZStack {
             RoundedRectangle(cornerRadius: 18, style: .continuous)
                 .fill(Obsidian.canvas)
+                .overlay(DotGrid())
                 .overlay(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                         .stroke(Color.white.opacity(0.07), lineWidth: 1)
@@ -84,9 +97,26 @@ struct DiagramDrawingCard: View {
             RevealDiagram(image: image)
                 .id(revision)
                 .padding(16)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
         .frame(maxHeight: .infinity)
+    }
+}
+
+/// The canvas's faint dot grid, the same 20pt grid the diagrams' own backdrop uses.
+private struct DotGrid: View {
+    var body: some View {
+        Canvas { context, size in
+            var dots = Path()
+            for x in stride(from: 10.0, through: size.width, by: 20) {
+                for y in stride(from: 10.0, through: size.height, by: 20) {
+                    dots.addEllipse(in: CGRect(x: x - 0.8, y: y - 0.8, width: 1.6, height: 1.6))
+                }
+            }
+            context.fill(dots, with: .color(.white.opacity(0.06)))
+        }
+        .allowsHitTesting(false)
     }
 }
 

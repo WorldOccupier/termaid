@@ -72,7 +72,7 @@ struct NewDiagramComposer: View {
 
     private var drawingCard: some View {
         DiagramDrawingCard(title: session.title, sentences: session.sentences, currentStep: session.currentStep,
-                           image: session.previewSVG.flatMap { SVGCache.image(id: session.draftID, svg: $0) },
+                           image: session.previewSVG.flatMap { SVGCache.image(id: session.draftID, svg: DiagramDrawingCard.canvasSVG($0)) },
                            revision: session.previewRevision, saved: session.createdItem != nil)
             .contentShape(Rectangle())
             .onTapGesture { if let item = session.createdItem { finish(item) } }

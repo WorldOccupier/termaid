@@ -1,4 +1,4 @@
-FROM ./gguf/lfm3-json-v1-q6_k.gguf
+FROM ./gguf/lfm3-v11-q6_k.gguf
 # LFM3 chat template with thinking disabled, matching training (enable_thinking=False).
 TEMPLATE """{{- if .System }}<|im_start|>system
 {{ .System }}<|im_end|>

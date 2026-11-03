@@ -4,7 +4,7 @@
 # Usage: scripts/verify-mac-engine.sh [model.gguf]
 set -eu
 cd "$(dirname "$0")/.."
-MODEL=${1:-training/gguf/lfm3-json-v1-q6_k.gguf}
+MODEL=${1:-training/gguf/lfm3-v10-q6_k.gguf}
 BIN=mac/.build/release/termaid-mac
 WORK=$(mktemp -d)
 trap 'rm -rf "$WORK"' EXIT

@@ -14,7 +14,7 @@ import UniformTypeIdentifiers
 @MainActor enum LibraryWindow {
     private static var window: NSWindow?
     private static let highlight = LibraryHighlight()
-    private static let appMode = LibraryAppMode(app: NSApp, newDiagram: showNewDiagram)
+    private static let appMode = LibraryAppMode(app: NSApp)
 
     static func show(highlighting id: UUID?, opening openID: UUID? = nil) {
         highlight.highlightedID = id

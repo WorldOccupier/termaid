@@ -37,16 +37,17 @@ export const OBSIDIAN: Theme = {
       .map((c, i) => [`--pele-series-${i + 1}`, c])),
   },
   radius: 10,
-  defs: () =>
+  defs: (box: Box) =>
     `<radialGradient id="spot"><stop offset="0" stop-color="#ffffff" stop-opacity="0.075"/>` +
     `<stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>` +
     `<pattern id="odots" width="20" height="20" patternUnits="userSpaceOnUse">` +
     `<circle cx="10" cy="10" r="0.8" fill="#ffffff"/></pattern>` +
+    `<clipPath id="ocard"><rect ${card(box)}/></clipPath>` +
     HUES.map((pair, i) => linear(`o${i}`, pair)).join('') + linear('odecide', DECIDE),
-  // Black, a faint spotlight from the top, a dot grid and a hairline frame.
+  // Black, a faint spotlight from the top (clipped to the card so it can't light the corners), a dot grid and a hairline frame.
   backdrop: (box: Box) =>
     `<rect ${card(box)} fill="#000000"/>` +
-    `<ellipse cx="${box.x + box.w / 2}" cy="${box.y}" rx="${box.w * 0.6}" ry="${box.h * 0.65}" fill="url(#spot)"/>` +
+    `<ellipse cx="${box.x + box.w / 2}" cy="${box.y}" rx="${box.w * 0.6}" ry="${box.h * 0.65}" fill="url(#spot)" clip-path="url(#ocard)"/>` +
     `<rect ${card(box)} fill="url(#odots)" opacity="0.06"/>` +
     `<rect x="${box.x + 0.5}" y="${box.y + 0.5}" width="${box.w - 1}" height="${box.h - 1}" rx="20" fill="none" stroke="#1c1c20"/>`,
   node: (n: NodeInfo) => ({

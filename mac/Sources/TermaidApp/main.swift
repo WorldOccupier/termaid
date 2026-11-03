@@ -6,11 +6,13 @@ import Combine
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private let model = AppModel(creator: EngineDiagramCreator(models: .shared))
     private let hotkeys = Hotkeys()
+    private let mainMenu = MainMenu(newDiagram: LibraryWindow.showNewDiagram)
     private var menuBar: MenuBar!
     private var panel: CapsulePanel!
     private var cancellables = Set<AnyCancellable>()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        NSApp.mainMenu = mainMenu.menu
         let model = self.model
         let hosting = CapsuleHostingView(rootView: CapsuleRootView(model: model))
         hosting.shapeSize = { model.shapeSize }
@@ -108,8 +110,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             centerX = rect.midX
             top = rect.minY - 8
         }
-        let minX = screen.visibleFrame.minX + 4
-        let maxX = screen.visibleFrame.maxX - size.width - 4
+        // The shape sits shadowInset inside the panel; place the shape, not the panel, on screen.
+        top += CapsuleMetrics.shadowInset
+        let minX = screen.visibleFrame.minX + 4 - CapsuleMetrics.shadowInset
+        let maxX = screen.visibleFrame.maxX - size.width - 4 + CapsuleMetrics.shadowInset
         let x = min(max(centerX - size.width / 2, minX), maxX)
         panel.setFrame(NSRect(x: x, y: top - size.height, width: size.width, height: size.height), display: true)
     }

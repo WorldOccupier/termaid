@@ -26,7 +26,7 @@ const REPLY_SCHEMA = {
 };
 
 // termaid-lfm3 was fine-tuned on (diagram so far, sentence) steps with this prompt.
-const PER_SENTENCE_PROMPT = `You build a flowchart one sentence at a time.
+export const PER_SENTENCE_PROMPT = `You build a flowchart one sentence at a time.
 You get the diagram so far as JSON and the next sentence of the description. Reply with the full
 updated diagram as JSON: {"direction": "TD" | "LR", "boxes": ["<box>", ...],
 "edges": [["<from box>", "<to box>", "<label>"], ...]}.

@@ -16,8 +16,9 @@ and termaid validates it and generates the Mermaid itself, so the output is alwa
 valid. Conditions become decision diamonds with yes/no branches. Every diagram is also checked
 with [Pele](https://github.com/obsidianmd/pele).
 
-> The model weights (`training/gguf/`) are not in this repo because of their size. Build them
-> with the training pipeline below, or pick a model file in the app's setup screen.
+> The model weights are not in this repo because of their size. Download `termaid.gguf` from
+> [huggingface.co/VatsaIsHere/termaid](https://huggingface.co/VatsaIsHere/termaid) and pick it in
+> the app's setup screen, or build your own with the training pipeline below.
 
 ## Layout
 
@@ -33,7 +34,7 @@ with [Pele](https://github.com/obsidianmd/pele).
 ```sh
 npm run build:engine            # build mac/Sources/TermaidCore/Resources/engine.js (not committed; rerun after changing src/)
 cd mac && swift build -c release
-.build/release/termaid-mac diagram ../training/gguf/lfm3-json-v1-q6_k.gguf "build, then test, then deploy"
+.build/release/termaid-mac diagram ../training/gguf/lfm3-v10-q6_k.gguf "build, then test, then deploy"
 .build/release/termaid-mac transcribe clip.wav     # 16 kHz mono WAV
 .build/release/termaid-mac eval <model.gguf> <descriptions.txt>   # one JSON line per description
 ```
@@ -46,27 +47,30 @@ Requires Node ≥ 23.6 (runs TypeScript directly) and Xcode 26 or newer.
 ## Fine-tuned model
 
 termaid sends the description one sentence at a time, with the diagram so far, to LiquidAI/LFM3-1.7B
-with a LoRA adapter trained on those per-sentence steps (`data-v6`, from
-`training/generate_data.py`). It is released under the
+with a LoRA adapter trained on those per-sentence steps (`data-v10`, see below). It is released under the
 [LFM Open License v1.0](https://huggingface.co/LiquidAI/LFM3-1.7B/blob/main/LICENSE), which does not
 license commercial use by organizations with $10M+ annual revenue. Training, merging and GGUF
 conversion run on Modal (Unsloth and MLX don't support LFM3):
 
 ```sh
 cd training
-uvx modal run modal_train_lfm3.py::main --name lfm3-json-v1 --steps 300
-uvx modal run modal_train_lfm3.py::evaluate_holdout --name lfm3-json-v1 --descriptions holdout-complex.txt
-uvx modal run modal_train_lfm3.py::gguf --name lfm3-json-v1
-mkdir -p gguf && uvx modal volume get termaid-runs lfm3-json-v1/lfm3-json-v1-f16.gguf gguf/
-llama-quantize gguf/lfm3-json-v1-f16.gguf gguf/lfm3-json-v1-q6_k.gguf Q6_K
+python connected_stories.py 150 2 sonnet data-sonnet      # ~300 stories via the claude CLI, ~25 min
+python build_data.py data-v9 data-v10 data-sonnet/stories.jsonl
+TERMAID_DATA=data-v10 uvx modal run --detach modal_train_lfm3.py::main --name lfm3-v10 --steps 520
+uvx modal run modal_train_lfm3.py::gguf --name lfm3-v10
+mkdir -p gguf && uvx modal volume get termaid-runs lfm3-v10/lfm3-v10-f16.gguf gguf/
+llama-quantize gguf/lfm3-v10-f16.gguf gguf/lfm3-v10-q6_k.gguf Q6_K
+weight_space/run_eval.sh gguf/lfm3-v10-q6_k.gguf v10-q6k && node weight_space/score.ts v10-q6k base-q6k
 ollama create termaid-lfm3 -f Modelfile-lfm3   # only for scripts/compare-engines.ts
 ```
 
-The data (`data-v6`) mixes software with hiring, healthcare, logistics,
-finance and kitchen vocabularies (`training/domains.py`), and ~30% of stories are long (4-7
-follow-up sentences, several decisions, loops back to earlier boxes). `holdout-complex.txt` adds
-hand-written long descriptions, including domains never seen in training (education, legal,
-manufacturing).
+`data-v9` comes from the template stories in `generate_data.py`, which mix software with hiring,
+healthcare, logistics, finance and kitchen vocabularies (`training/domains.py`). `data-v10` drops
+the v9 steps whose gold diagram breaks the app's own checks (`measure_problems.ts`, mostly boxes
+nothing leads into) and adds ~300 long stories from `connected_stories.py`, where Claude writes
+descriptions in which every sentence continues the flow. The steps were set for ~1.33 epochs.
+`holdout-complex.txt` adds hand-written long descriptions, including domains never seen in
+training (education, legal, manufacturing).
 
 Check every checkpoint against `holdout.txt` (never in the training data). A learning rate of 1e-4
 diverged. Use Q6_K, not Q4_K_M: on the 55 holdout descriptions, Q6_K produced the same diagram as
@@ -76,8 +80,8 @@ Other training files:
 
 - `holdout-front.txt`: hand-written "in front of" / "behind" routing cases, kept out of training like
   the other holdout files.
-- `eval_termaid.ts`: runs holdout descriptions through the app's own pipeline (checks and retries
-  included) against an Ollama model: `node training/eval_termaid.ts <model> <descriptions.txt>`.
+- `eval_termaid.ts`: runs holdout descriptions through the app's own per-sentence pipeline
+  against an Ollama model: `node training/eval_termaid.ts <model> <descriptions.txt>`.
 
 ## Test
 

@@ -12,6 +12,22 @@ export function findProblems(state: DiagramState): string[] {
   ];
 }
 
+// Words that give a condition's other outcome in the same sentence: "if X, A, otherwise B", "the rest go to B".
+const OTHER_OUTCOME =
+  /\b(otherwise|if not|the rest|the others|anything else|in which case|the remaining)\b|(?<!\blike )\beveryone else\b|(?<!\b(?:nobody|no one|nothing|someone|everyone|anything) )\belse\b/i;
+
+// A sentence that says what happens otherwise must give a decision both outcomes; the model tends to
+// draw only the first case and drop the rest. Checks one step: the diagram before and after `sentence`.
+export function findStepProblems(before: DiagramState, sentence: string, after: DiagramState): string[] {
+  if (!OTHER_OUTCOME.test(sentence)) return [];
+  const existing = new Set(before.edges.map((edge) => JSON.stringify(edge)));
+  const answered = new Set(after.edges.filter((edge) => isDecision(edge[0]) && !existing.has(JSON.stringify(edge))).map(([from]) => from));
+  if (answered.size === 0) return ["the sentence says what happens otherwise, but no decision gets an outcome"];
+  return [...answered]
+    .filter((decision) => after.edges.filter(([from]) => from === decision).length === 1)
+    .map((decision) => `"${decision}" has one outcome, but the sentence says what happens otherwise`);
+}
+
 function isDecision(box: string): boolean {
   return box.endsWith("?");
 }

@@ -59,13 +59,14 @@ export function styled(svg: string, theme: Theme, { pad = 36 } = {}): string {
     `<g class="pele-lifelines" fill="none" stroke="${ll.stroke}" stroke-dasharray="${ll.dash}" ` +
     `stroke-width="${ll.width}" stroke-linecap="${ll.cap}">`)
 
-  // Frame the drawing on the theme's card.
+  // Frame the drawing on the theme's card, grouped so a host that draws its own surface
+  // (the Mac app's drawing card) can drop it.
   const [x, y, w, h] = (svg.match(/viewBox="([^"]+)"/)?.[1] ?? '0 0 800 600').split(/[\s,]+/).map(Number)
   const box = { x: x - pad, y: y - pad, w: w + pad * 2, h: h + pad * 2 }
   svg = svg
     .replace(/viewBox="[^"]+"/, `viewBox="${box.x} ${box.y} ${box.w} ${box.h}"`)
     .replace(/(<svg\b[^>]*?)\swidth="[^"]*"/, '$1').replace(/(<svg\b[^>]*?)\sheight="[^"]*"/, '$1')
-    .replace(/(<svg\b[^>]*>)/, `$1<defs>${theme.defs(box)}</defs>${theme.backdrop(box)}`)
+    .replace(/(<svg\b[^>]*>)/, `$1<defs>${theme.defs(box)}</defs><g class="termaid-backdrop">${theme.backdrop(box)}</g>`)
 
   return resolve(svg, { ...theme.vars, '--pele-radius': `${theme.radius}px` })
 }

@@ -199,7 +199,7 @@ final class AppModel: ObservableObject {
     private func receiveStep(_ index: Int, svg: String, gen: Int) {
         // Steps only move forward; the same step arriving twice is ignored.
         guard gen == generation, svgImage == nil || index > currentStep,
-              let image = NSImage(data: Data(svg.utf8)) else { return }
+              let image = DiagramDrawingCard.canvasImage(svg: svg) else { return }
         currentStep = index
         svgImage = image
         svgRevision += 1
