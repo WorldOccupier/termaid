@@ -35,3 +35,9 @@ xcrun notarytool submit "$ZIP" --keychain-profile "$NOTARY_PROFILE" --wait
 xcrun stapler staple "$APP"
 spctl --assess --type execute --verbose "$APP"
 echo "Notarized $APP"
+
+# The download for the GitHub release. Without --noextattr, ditto stores the symlinks' extended
+# attributes as AppleDouble entries; unzip and Archive Utility write those out as ._ files inside
+# llama.framework, which breaks the seal and Gatekeeper rejects the app.
+ditto -c -k --norsrc --noextattr --noqtn --keepParent "$APP" "$ROOT/build/Termaid.zip"
+echo "Wrote $ROOT/build/Termaid.zip"
