@@ -27,7 +27,6 @@ final class ModelStore: ObservableObject {
     private var speechTask: Task<ParakeetTranscriber, Error>?
     private var diagramTask: Task<EmbeddedEngine, Error>?
 
-    private static let modelPathKey = "modelPath"
     private static let setupDoneKey = "setupDone"
 
     var allReady: Bool { speech.isReady && diagram.isReady }
@@ -39,17 +38,22 @@ final class ModelStore: ObservableObject {
             || !FileManager.default.fileExists(atPath: Self.modelPath)
     }
 
+    /// Something Setup can fix: a missing model, a failed load, or a microphone not yet allowed.
+    var setupHasWork: Bool {
+        if needsSetup || microphone != .authorized { return true }
+        if case .failed = speech { return true }
+        if case .failed = diagram { return true }
+        return false
+    }
+
     func markSetupDone() {
         UserDefaults.standard.set(true, forKey: Self.setupDoneKey)
     }
 
-    /// `$TERMAID_MODEL`, then a file picked in setup, then the default location.
+    /// `$TERMAID_MODEL`, then the default location the setup screen downloads to.
     static var modelPath: String {
         if let override = ProcessInfo.processInfo.environment["TERMAID_MODEL"], !override.isEmpty {
             return override
-        }
-        if let picked = UserDefaults.standard.string(forKey: modelPathKey), !picked.isEmpty {
-            return picked
         }
         return defaultModelURL.path
     }
@@ -71,7 +75,7 @@ final class ModelStore: ObservableObject {
         if speechTask == nil { startSpeech() }
     }
 
-    /// The user pressed Download for the diagram model. It goes to the default location, replacing any picked file.
+    /// The user pressed Download for the diagram model. It goes to the default location.
     func downloadDiagram() {
         guard diagramTask == nil, !isDownloadingDiagram else { return }
         diagram = .downloading(0)
@@ -83,7 +87,6 @@ final class ModelStore: ObservableObject {
         Task {
             do {
                 try await downloader.download()
-                UserDefaults.standard.removeObject(forKey: Self.modelPathKey)
                 startDiagram()
             } catch {
                 diagram = .failed(error.localizedDescription)
@@ -112,24 +115,12 @@ final class ModelStore: ObservableObject {
         return try await task.value
     }
 
-    func chooseModelFile() {
-        let panel = NSOpenPanel()
-        panel.title = "Choose the termaid diagram model"
-        panel.allowsMultipleSelection = false
-        panel.canChooseDirectories = false
-        panel.allowedContentTypes = [.init(filenameExtension: "gguf") ?? .data]
-        NSApp.activate(ignoringOtherApps: true)
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-        UserDefaults.standard.set(url.path, forKey: Self.modelPathKey)
-        diagramTask = nil
-        startDiagram()
-    }
-
     func retry() {
         if case .failed = speech { speechTask = nil; startSpeech() }
         if case .failed = diagram {
             diagramTask = nil
-            if FileManager.default.fileExists(atPath: Self.modelPath) { startDiagram() } else { downloadDiagram() }
+            // A model that failed to load may be damaged, so fetch a fresh copy rather than reloading it.
+            downloadDiagram()
         }
     }
 

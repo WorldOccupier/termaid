@@ -135,15 +135,8 @@ private struct SetupView: View {
                 divider
                 row(icon: "point.3.connected.trianglepath.dotted", title: "Diagram model", detail: diagramDetail,
                     failed: isFailure(store.diagram)) {
-                    HStack(spacing: 8) {
-                        if canChooseDiagramFile {
-                            StatusOrb(look: .action(symbol: "folder", help: "Choose a .gguf file instead"), size: 24) {
-                                store.chooseModelFile()
-                            }
-                        }
-                        StatusOrb(look: diagramLook) {
-                            if case .failed = store.diagram { store.retry() } else { store.downloadDiagram() }
-                        }
+                    StatusOrb(look: diagramLook) {
+                        if case .failed = store.diagram { store.retry() } else { store.downloadDiagram() }
                     }
                 }
                 divider
@@ -232,13 +225,6 @@ private struct SetupView: View {
         case .downloading(let f): return "Downloading · \(Int(f * 100))%"
         case .failed(let m): return m
         default: return "Waiting"
-        }
-    }
-
-    private var canChooseDiagramFile: Bool {
-        switch store.diagram {
-        case .notDownloaded, .missing, .failed: return true
-        default: return false
         }
     }
 

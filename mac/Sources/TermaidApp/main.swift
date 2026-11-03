@@ -23,7 +23,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             onTalk: { [weak self] in self?.model.flashHint() },
             onType: { [weak self] in self?.model.startTyping() },
             onLibrary: { LibraryWindow.show(highlighting: nil) },
-            onSetup: { [weak self] in SetupWindow.show { self?.model.flashHint() } }
+            onSetup: { [weak self] in SetupWindow.show { self?.model.flashHint() } },
+            setupHasWork: { ModelStore.shared.setupHasWork }
         )
 
         hotkeys.onVoiceDown = { [weak self] in self?.model.voiceDown() }
