@@ -74,14 +74,15 @@ struct LibraryDetailView: View {
 
     /// While editing, the source pane gets the preview; otherwise the saved diagram, draggable out.
     private var diagram: some View {
-        Group {
-            if let editSession { DiagramEditPreview(session: editSession) } else { SVGImage(id: item.id, svg: item.svg) }
-        }
+        ZoomableDiagram(exportDrag: { Actions.dragProvider(item) }) {
+            Group {
+                if let editSession { DiagramEditPreview(session: editSession) } else { SVGImage(id: item.id, svg: item.svg) }
+            }
             .padding(32)
+        }
             .id(item.id)
             .transition(.diagramSwap(direction: stepDirection))
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .onDrag { Actions.dragProvider(item) }
     }
 
     /// Runs a browsing shortcut only when not editing, so typing in the editor never triggers one.

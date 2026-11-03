@@ -94,9 +94,11 @@ struct DiagramDrawingCard: View {
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                         .stroke(Color.white.opacity(0.07), lineWidth: 1)
                 )
-            RevealDiagram(image: image)
-                .id(revision)
-                .padding(16)
+            ZoomableDiagram {
+                RevealDiagram(image: image)
+                    .id(revision)
+                    .padding(16)
+            }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))

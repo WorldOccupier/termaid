@@ -135,7 +135,8 @@ private extension View {
     /// Fades and blurs a phase's content in or out; hidden layers take no clicks.
     func capsuleLayer(_ on: Bool) -> some View {
         self
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            // minHeight 0 keeps a hidden layer's own minimum (the card's is ~84pt) from stretching the bar.
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             .opacity(on ? 1 : 0)
             .blur(radius: on ? 0 : 6)
             .animation(.easeOut(duration: 0.3).delay(on ? 0.16 : 0), value: on)
