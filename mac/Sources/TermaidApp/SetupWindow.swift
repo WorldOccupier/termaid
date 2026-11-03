@@ -119,7 +119,7 @@ private struct SetupView: View {
             Text("Set up termaid")
                 .font(Obsidian.font(24, .semibold))
                 .foregroundStyle(Obsidian.fg)
-            Text("Everything runs on this Mac. Download the speech model once; after that termaid starts ready.")
+            Text("Everything runs on this Mac. Download the two models once; after that termaid starts ready.")
                 .font(Obsidian.font(13))
                 .foregroundStyle(Obsidian.muted)
                 .fixedSize(horizontal: false, vertical: true)
@@ -135,7 +135,16 @@ private struct SetupView: View {
                 divider
                 row(icon: "point.3.connected.trianglepath.dotted", title: "Diagram model", detail: diagramDetail,
                     failed: isFailure(store.diagram)) {
-                    StatusOrb(look: diagramLook) { store.chooseModelFile() }
+                    HStack(spacing: 8) {
+                        if canChooseDiagramFile {
+                            StatusOrb(look: .action(symbol: "folder", help: "Choose a .gguf file instead"), size: 24) {
+                                store.chooseModelFile()
+                            }
+                        }
+                        StatusOrb(look: diagramLook) {
+                            if case .failed = store.diagram { store.retry() } else { store.downloadDiagram() }
+                        }
+                    }
                 }
                 divider
                 row(icon: "mic", title: "Microphone", detail: micDetail, failed: false) {
@@ -208,7 +217,9 @@ private struct SetupView: View {
     private var diagramLook: StatusOrb.Look {
         switch store.diagram {
         case .ready: return .done
-        case .missing, .failed: return .problem(symbol: "folder", help: "Choose the .gguf model file")
+        case .notDownloaded, .missing: return .action(symbol: "arrow.down", help: "Download the diagram model")
+        case .downloading(let f): return .progress(f)
+        case .failed: return .problem(symbol: "arrow.clockwise", help: "Try again")
         default: return .progress(nil)
         }
     }
@@ -217,9 +228,17 @@ private struct SetupView: View {
         switch store.diagram {
         case .loading, .waiting: return "Loading…"
         case .ready: return "Ready"
-        case .missing: return "Not found — choose the .gguf model file"
+        case .notDownloaded, .missing: return "About 1.4 GB, downloaded once"
+        case .downloading(let f): return "Downloading · \(Int(f * 100))%"
         case .failed(let m): return m
         default: return "Waiting"
+        }
+    }
+
+    private var canChooseDiagramFile: Bool {
+        switch store.diagram {
+        case .notDownloaded, .missing, .failed: return true
+        default: return false
         }
     }
 

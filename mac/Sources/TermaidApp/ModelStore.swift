@@ -51,20 +51,49 @@ final class ModelStore: ObservableObject {
         if let picked = UserDefaults.standard.string(forKey: modelPathKey), !picked.isEmpty {
             return picked
         }
+        return defaultModelURL.path
+    }
+
+    private static var defaultModelURL: URL {
         let support = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        return support.appendingPathComponent("termaid/model.gguf").path
+        return support.appendingPathComponent("termaid/model.gguf")
     }
 
     /// Loads whatever is already on this Mac. Never downloads; that waits for `downloadSpeech()`.
     /// Safe to call repeatedly; finished or running loads are kept.
     func prepare() {
         if speechTask == nil, ParakeetTranscriber.isDownloaded { startSpeech() }
-        if diagramTask == nil { startDiagram() }
+        if diagramTask == nil, !isDownloadingDiagram { startDiagram() }
     }
 
     /// The user pressed Download in setup.
     func downloadSpeech() {
         if speechTask == nil { startSpeech() }
+    }
+
+    /// The user pressed Download for the diagram model. It goes to the default location, replacing any picked file.
+    func downloadDiagram() {
+        guard diagramTask == nil, !isDownloadingDiagram else { return }
+        diagram = .downloading(0)
+        let downloader = ModelDownloader(source: ModelDownloader.diagramModelURL, destination: Self.defaultModelURL) { fraction in
+            Task { @MainActor in
+                if case .downloading = ModelStore.shared.diagram { ModelStore.shared.diagram = .downloading(fraction) }
+            }
+        }
+        Task {
+            do {
+                try await downloader.download()
+                UserDefaults.standard.removeObject(forKey: Self.modelPathKey)
+                startDiagram()
+            } catch {
+                diagram = .failed(error.localizedDescription)
+            }
+        }
+    }
+
+    private var isDownloadingDiagram: Bool {
+        if case .downloading = diagram { return true }
+        return false
     }
 
     func transcriber() async throws -> ParakeetTranscriber {
@@ -98,7 +127,10 @@ final class ModelStore: ObservableObject {
 
     func retry() {
         if case .failed = speech { speechTask = nil; startSpeech() }
-        if case .failed = diagram { diagramTask = nil; startDiagram() }
+        if case .failed = diagram {
+            diagramTask = nil
+            if FileManager.default.fileExists(atPath: Self.modelPath) { startDiagram() } else { downloadDiagram() }
+        }
     }
 
     func requestMicrophone() {
@@ -143,7 +175,7 @@ final class ModelStore: ObservableObject {
     private func startDiagram() {
         let path = Self.modelPath
         guard FileManager.default.fileExists(atPath: path) else {
-            diagram = .missing
+            diagram = .notDownloaded
             return
         }
         diagram = .loading

@@ -40,7 +40,7 @@ isn't worth it.
 
 ## Usage
 
-The simplest route is the termaid app. Pick this file on the setup screen and the app runs it with
+The simplest route is the termaid app. The setup screen downloads this file and the app runs it with
 llama.cpp.
 
 To run it yourself, use LFM3's chat template with an empty `<think></think>` block and temperature
