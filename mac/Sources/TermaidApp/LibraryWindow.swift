@@ -33,17 +33,17 @@ import UniformTypeIdentifiers
     }
 
     private static func makeWindow() -> NSWindow {
-        let w = InsetButtonsWindow(contentRect: NSRect(x: 0, y: 0, width: 1040, height: 680),
+        let w = InsetButtonsWindow(contentRect: NSRect(x: 0, y: 0, width: 1200, height: 700),
                          styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
                          backing: .buffered, defer: false)
-        w.title = "Library"
+        w.title = "termaid"
         w.titlebarAppearsTransparent = true
         w.titleVisibility = .hidden
         w.appearance = NSAppearance(named: .darkAqua)
         w.backgroundColor = NSColor(red: 5 / 255, green: 5 / 255, blue: 6 / 255, alpha: 1)
         w.isReleasedWhenClosed = false
         w.delegate = appMode
-        w.minSize = NSSize(width: 660, height: 460)
+        w.minSize = NSSize(width: 660 + WindowSidebar.width, height: 460)
         w.center()
         w.contentView = NSHostingView(rootView: LibraryRootView(highlight: highlight))
         return w
@@ -78,12 +78,43 @@ struct LibraryRootView: View {
     @State private var selection: UUID?
     @State private var openID: UUID?
     @State private var composer: DiagramCreateSession?
+    @State private var tab: WindowTab = .library
 
     private var openItem: LibraryItem? { openID.flatMap { id in library.items.first { $0.id == id } } }
 
     var body: some View {
         ZStack {
             Spotlight()
+            HStack(spacing: 0) {
+                WindowSidebar(selection: $tab)
+                switch tab {
+                case .library: libraryPane
+                case .settings: SettingsView(updater: .shared)
+                }
+            }
+        }
+        .ignoresSafeArea()
+        .frame(minWidth: 660 + WindowSidebar.width, minHeight: 460)
+        .preferredColorScheme(.dark)
+        .onChange(of: highlight.highlightedID) { _, id in
+            guard let id else { return }
+            tab = .library
+            selection = id
+            close()
+        }
+        .onChange(of: highlight.newDiagramRequested) { _, requested in
+            if requested { tab = .library; startComposing() }
+        }
+        .onAppear {
+            if let id = highlight.highlightedID { selection = id }
+            if let id = highlight.openID { openID = id }
+            if highlight.newDiagramRequested { startComposing() }
+            createScriptedDiagram()
+        }
+    }
+
+    private var libraryPane: some View {
+        ZStack {
             if let item = openItem {
                 LibraryDetailView(item: item, items: ordered, open: open, close: close)
                     .transition(.move(edge: .trailing).combined(with: .opacity))
@@ -98,21 +129,7 @@ struct LibraryRootView: View {
                     .zIndex(2)
             }
         }
-        .ignoresSafeArea()
-        .frame(minWidth: 660, minHeight: 460)
-        .preferredColorScheme(.dark)
-        .onChange(of: highlight.highlightedID) { _, id in
-            guard let id else { return }
-            selection = id
-            close()
-        }
-        .onChange(of: highlight.newDiagramRequested) { _, requested in if requested { startComposing() } }
-        .onAppear {
-            if let id = highlight.highlightedID { selection = id }
-            if let id = highlight.openID { openID = id }
-            if highlight.newDiagramRequested { startComposing() }
-            createScriptedDiagram()
-        }
+        .clipped()
     }
 
     private var ordered: [LibraryItem] { DateGroup.make(library.items).flatMap(\.items) }

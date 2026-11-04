@@ -35,7 +35,7 @@ final class MenuBar: NSObject, NSMenuDelegate {
         let menu = NSMenu()
         menu.addItem(item("Talk (hold ⌥ Space)", #selector(talk)))
         menu.addItem(item("Type… (⌥ T)", #selector(typeText)))
-        menu.addItem(item("Library", #selector(showLibrary)))
+        menu.addItem(item("Open App", #selector(showLibrary)))
         menu.addItem(.separator())
         let setup = item("Setup…", #selector(showSetup))
         setupItem = setup
